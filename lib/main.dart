@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sekrut/app.dart';
+import 'package:sekrut/app_config.dart';
+import 'package:sekrut/di/app_module.dart';
 
 void main() {
+  AppConfig.init();
+  AppModule.inject();
+
   runApp(const SekrutApp());
-}
-
-class SekrutApp extends StatelessWidget {
-  const SekrutApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: Text("Sekrut"),
-          ),
-        ),
-      ),
-    );
-  }
 }
