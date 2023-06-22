@@ -11,7 +11,7 @@ class SekrutApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: AppTheme.lightTheme,
-      initialRoute: Routes.loader,
+      initialRoute: Routes.landing,
       getPages: AppRoute.pages,
       initialBinding: AppBinding(),
       debugShowCheckedModeBanner: false,

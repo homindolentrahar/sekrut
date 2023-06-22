@@ -12,6 +12,30 @@ abstract class AppTheme {
         fontWeight: FontWeight.bold,
         fontSize: 32,
       ),
+      headlineSmall: TextStyle(
+        color: AppColor.black,
+        fontFamily: FontFamily.hk,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
+      titleLarge: TextStyle(
+        color: AppColor.black,
+        fontFamily: FontFamily.hk,
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+      titleMedium: TextStyle(
+        color: AppColor.black,
+        fontFamily: FontFamily.hk,
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+      ),
+      bodyLarge: TextStyle(
+        color: AppColor.black,
+        fontFamily: FontFamily.hk,
+        fontWeight: FontWeight.normal,
+        fontSize: 14,
+      ),
     ),
     canvasColor: AppColor.white,
     colorScheme: const ColorScheme(
@@ -26,6 +50,7 @@ abstract class AppTheme {
       onBackground: AppColor.white,
       surface: AppColor.white,
       onSurface: AppColor.black,
+      tertiary: AppColor.gray,
     ),
   );
 }
