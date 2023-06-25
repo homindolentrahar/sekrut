@@ -1,0 +1,254 @@
+[
+  {
+    "title": "Skill",
+    "description": "",
+    "sub_criterias": [
+      {
+        "title": "Pengalaman Kerja",
+        "description": "Pengalaman kerja kandidat pada bidang pekerjaan",
+        "options": [
+          {
+            "order": 1,
+            "value": 3,
+            "title": "> 5 tahun",
+            "description": "Pengalaman kerja > 5 tahun pada bidang pekerjaan terkait"
+          },
+          {
+            "order": 2,
+            "value": 2,
+            "title": "1-5 tahun",
+            "description": "Pengalaman kerja 1-5 tahun pada bidang pekerjaan terkait"
+          },
+          {
+            "order": 3,
+            "value": 1,
+            "title": "< 1 tahun",
+            "description": "Pengalaman kerja < 1 tahun pada bidang pekerjaan terkait"
+          }
+        ]
+      },
+      {
+        "title": "Sertifikat",
+        "description": "Serifikat yang dimiliki kandidat pada bidang pekerjaan",
+        "options": [
+          {
+            "order": 1,
+            "value": 3,
+            "title": "> 5 buah",
+            "description": "Jumlah sertifikat > 5 buah pada bidang pekerjaan terkait"
+          },
+          {
+            "order": 2,
+            "value": 2,
+            "title": "< 5 buah",
+            "description": "Jumlah sertifikat < 5 buah pada bidang pekerjaan terkait"
+          },
+          {
+            "order": 3,
+            "value": 1,
+            "title": "Tidak ada",
+            "description": "Tidak ada sertifikat pada bidang pekerjaan terkait"
+          }
+        ]
+      },
+      {
+        "title": "Interview",
+        "description": "Nilai yang dimiliki kandidat selama Interview pada bidang pekerjaan terkait",
+        "options": [
+          {
+            "order": 1,
+            "value": 5,
+            "title": "0-20",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 4,
+            "title": "21-40",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 3,
+            "title": "41-60",
+            "description": ""
+          },
+          {
+            "order": 4,
+            "value": 2,
+            "title": "61-80",
+            "description": ""
+          },
+          {
+            "order": 5,
+            "value": 1,
+            "title": "81-100",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "title": "Pengetauan",
+        "description": "Pengetahuan yang dimiliki kandidat pada bidang pekerjaan terkait",
+        "options": [
+          {
+            "order": 1,
+            "value": 3,
+            "title": "Dasar",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 2,
+            "title": "Menengah",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 1,
+            "title": "Mahir",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Sikap",
+    "description": "",
+    "sub_criterias": [
+      {
+        "title": "Komunikasi",
+        "description": "",
+        "options": [
+          {
+            "order": 1,
+            "value": 3,
+            "title": "Lancar",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 2,
+            "title": "Cukup",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 1,
+            "title": "Kurang",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "title": "Attitude",
+        "description": "",
+        "options": [
+          {
+            "order": 1,
+            "value": 2,
+            "title": "Baik",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 1,
+            "title": "Buruk",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Portfolio",
+    "description": "",
+    "sub_criterias": [
+      {
+        "title": "Hasil Project Sebelumnya",
+        "description": "",
+        "options": [
+          {
+            "order": 1,
+            "value": 3,
+            "title": "Bagus",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 2,
+            "title": "Cukup",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 1,
+            "title": "Buruk",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "title": "Minat",
+        "description": "",
+        "options": [
+          {
+            "order": 1,
+            "value": 4,
+            "title": "Tinggi",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 3,
+            "title": "Cukup",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 2,
+            "title": "Kurang",
+            "description": ""
+          },
+          {
+            "order": 4,
+            "value": 1,
+            "title": "Tidak Ada",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "title": "Kemauan Belajar",
+        "description": "",
+        "options": [
+          {
+            "order": 1,
+            "value": 4,
+            "title": "Tinggi",
+            "description": ""
+          },
+          {
+            "order": 2,
+            "value": 3,
+            "title": "Cukup",
+            "description": ""
+          },
+          {
+            "order": 3,
+            "value": 2,
+            "title": "Kurang",
+            "description": ""
+          },
+          {
+            "order": 4,
+            "value": 1,
+            "title": "Tidak Ada",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+]

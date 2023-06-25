@@ -1,17 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sekrut/features/selection/domain/models/sub_criteria.dart';
 
-class Criteria {
-  final int index;
-  final int? order;
-  final String title;
-  final String description;
-  final List<SubCriteria>? subcriterias;
+part 'criteria.freezed.dart';
+part 'criteria.g.dart';
 
-  Criteria({
-    required this.index,
-    this.order,
-    required this.title,
-    required this.description,
-    this.subcriterias,
-  });
+@freezed
+class Criteria with _$Criteria {
+  const factory Criteria({
+    int? order,
+    required String title,
+    required String description,
+    @JsonKey(name: "sub_criterias") required List<SubCriteria> subCriterias,
+  }) = _Criteria;
+
+  factory Criteria.fromJson(Map<String, dynamic> json) =>
+      _$CriteriaFromJson(json);
 }
