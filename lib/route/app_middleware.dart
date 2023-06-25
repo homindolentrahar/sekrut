@@ -15,7 +15,7 @@ class AppMiddleware extends GetMiddleware {
     log("Username: $username");
 
     if (username != null) {
-      return const RouteSettings(name: Routes.home);
+      return const RouteSettings(name: Routes.model + Routes.create);
     }
 
     return null;

@@ -47,8 +47,6 @@ class LandingPage extends StatelessWidget {
                     title: "Mulai",
                     onPressed: () {
                       controller.saveUsername();
-
-                      // Get.offAllNamed(Routes.home);
                     },
                   ),
                 ],

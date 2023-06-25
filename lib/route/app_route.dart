@@ -3,13 +3,17 @@ import 'package:sekrut/core/presentation/pages/landing/landing_controller.dart';
 import 'package:sekrut/core/presentation/pages/landing/landing_page.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_controller.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/selection_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/model/create_selection_model_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/selection/selection_page.dart';
 import 'package:sekrut/route/app_middleware.dart';
 
 abstract class Routes {
   static const String loader = "/";
   static const String landing = "/landing";
-  static const String home = "/home";
+  static const String selection = "/selection";
+  static const String model = "/model";
+
+  static const String create = "/create";
 }
 
 abstract class AppRoute {
@@ -34,7 +38,12 @@ abstract class AppRoute {
       ],
     ),
     GetPage(
-      name: Routes.home,
+      name: "${Routes.model}${Routes.create}",
+      page: () => const CreateSelectionModelPage(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.selection,
       page: () => const SelectionPage(),
       transition: Transition.rightToLeftWithFade,
     ),

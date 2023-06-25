@@ -14,7 +14,7 @@ class LoaderController extends GetxController {
 
     if (username != null) {
       // Navigate to Home
-      Get.offAllNamed(Routes.home);
+      Get.offAllNamed(Routes.selection);
     } else {
       // Navigate to Landing
       Get.offAllNamed(Routes.landing);

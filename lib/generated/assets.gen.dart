@@ -29,10 +29,40 @@ class $AssetsFontsGen {
       [hKGroteskBold, hKGroteskMedium, hKGroteskRegular, hKGroteskSemiBold];
 }
 
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  /// File path: assets/icons/ic_add.svg
+  String get icAdd => 'assets/icons/ic_add.svg';
+
+  /// File path: assets/icons/ic_back.svg
+  String get icBack => 'assets/icons/ic_back.svg';
+
+  /// File path: assets/icons/ic_delete.svg
+  String get icDelete => 'assets/icons/ic_delete.svg';
+
+  /// File path: assets/icons/ic_drag.svg
+  String get icDrag => 'assets/icons/ic_drag.svg';
+
+  /// File path: assets/icons/ic_drag_fill.svg
+  String get icDragFill => 'assets/icons/ic_drag_fill.svg';
+
+  /// File path: assets/icons/ic_selected.svg
+  String get icSelected => 'assets/icons/ic_selected.svg';
+
+  /// File path: assets/icons/ic_sub_criteria.svg
+  String get icSubCriteria => 'assets/icons/ic_sub_criteria.svg';
+
+  /// List of all assets
+  List<String> get values =>
+      [icAdd, icBack, icDelete, icDrag, icDragFill, icSelected, icSubCriteria];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
 
 class AssetGenImage {
