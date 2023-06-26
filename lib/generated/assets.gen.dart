@@ -38,6 +38,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   String get icBack => 'assets/icons/ic_back.svg';
 
+  /// File path: assets/icons/ic_date.svg
+  String get icDate => 'assets/icons/ic_date.svg';
+
   /// File path: assets/icons/ic_delete.svg
   String get icDelete => 'assets/icons/ic_delete.svg';
 
@@ -47,15 +50,39 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_drag_fill.svg
   String get icDragFill => 'assets/icons/ic_drag_fill.svg';
 
+  /// File path: assets/icons/ic_group.svg
+  String get icGroup => 'assets/icons/ic_group.svg';
+
+  /// File path: assets/icons/ic_model.svg
+  String get icModel => 'assets/icons/ic_model.svg';
+
+  /// File path: assets/icons/ic_proceed.svg
+  String get icProceed => 'assets/icons/ic_proceed.svg';
+
   /// File path: assets/icons/ic_selected.svg
   String get icSelected => 'assets/icons/ic_selected.svg';
 
   /// File path: assets/icons/ic_sub_criteria.svg
   String get icSubCriteria => 'assets/icons/ic_sub_criteria.svg';
 
+  /// File path: assets/icons/ic_user.svg
+  String get icUser => 'assets/icons/ic_user.svg';
+
   /// List of all assets
-  List<String> get values =>
-      [icAdd, icBack, icDelete, icDrag, icDragFill, icSelected, icSubCriteria];
+  List<String> get values => [
+        icAdd,
+        icBack,
+        icDate,
+        icDelete,
+        icDrag,
+        icDragFill,
+        icGroup,
+        icModel,
+        icProceed,
+        icSelected,
+        icSubCriteria,
+        icUser
+      ];
 }
 
 class Assets {

@@ -12,6 +12,12 @@ abstract class AppTheme {
         fontWeight: FontWeight.bold,
         fontSize: 32,
       ),
+      headlineMedium: TextStyle(
+        color: AppColor.black,
+        fontFamily: FontFamily.hk,
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
       headlineSmall: TextStyle(
         color: AppColor.black,
         fontFamily: FontFamily.hk,
@@ -58,8 +64,8 @@ abstract class AppTheme {
       onSecondary: AppColor.white,
       error: Colors.red,
       onError: AppColor.white,
-      background: AppColor.dark,
-      onBackground: AppColor.white,
+      background: AppColor.light,
+      onBackground: AppColor.dark,
       surface: AppColor.white,
       onSurface: AppColor.black,
       tertiary: AppColor.gray,
