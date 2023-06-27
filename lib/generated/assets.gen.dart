@@ -38,6 +38,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_back.svg
   String get icBack => 'assets/icons/ic_back.svg';
 
+  /// File path: assets/icons/ic_collapsed.svg
+  String get icCollapsed => 'assets/icons/ic_collapsed.svg';
+
   /// File path: assets/icons/ic_date.svg
   String get icDate => 'assets/icons/ic_date.svg';
 
@@ -49,6 +52,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/ic_drag_fill.svg
   String get icDragFill => 'assets/icons/ic_drag_fill.svg';
+
+  /// File path: assets/icons/ic_expanded.svg
+  String get icExpanded => 'assets/icons/ic_expanded.svg';
 
   /// File path: assets/icons/ic_group.svg
   String get icGroup => 'assets/icons/ic_group.svg';
@@ -72,10 +78,12 @@ class $AssetsIconsGen {
   List<String> get values => [
         icAdd,
         icBack,
+        icCollapsed,
         icDate,
         icDelete,
         icDrag,
         icDragFill,
+        icExpanded,
         icGroup,
         icModel,
         icProceed,

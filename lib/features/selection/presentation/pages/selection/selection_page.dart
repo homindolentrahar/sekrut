@@ -5,6 +5,7 @@ import 'package:sekrut/core/presentation/widgets/texts.dart';
 import 'package:sekrut/features/selection/presentation/widgets/selection_item.dart';
 import 'package:sekrut/features/selection/presentation/widgets/selection_model_banner.dart';
 import 'package:sekrut/generated/assets.gen.dart';
+import 'package:sekrut/route/app_route.dart';
 
 class SelectionPage extends StatelessWidget {
   const SelectionPage({super.key});
@@ -20,7 +21,9 @@ class SelectionPage extends StatelessWidget {
           Assets.icons.icAdd,
           color: Get.theme.colorScheme.surface,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed("${Routes.selection}/89");
+        },
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,7 +63,11 @@ class SelectionPage extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: 5,
-                itemBuilder: (ctx, index) => const SelectionItem(),
+                itemBuilder: (ctx, index) => SelectionItem(
+                  onPressed: (value) {
+                    Get.toNamed("${Routes.selection}/89");
+                  },
+                ),
                 separatorBuilder: (ctx, index) => const SizedBox(height: 16),
               ),
             ],

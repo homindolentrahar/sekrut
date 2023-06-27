@@ -26,7 +26,9 @@ class SelectionItem extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
-        onTap: () {},
+        onTap: () {
+          onPressed?.call(null);
+        },
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
