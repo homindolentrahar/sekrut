@@ -3,8 +3,9 @@ import 'package:sekrut/core/presentation/pages/landing/landing_controller.dart';
 import 'package:sekrut/core/presentation/pages/landing/landing_page.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_controller.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/crud/crud_selection_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/detail/detail_selection_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/model/create_selection_model_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/model/crud_selection_model_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/selection_page.dart';
 import 'package:sekrut/route/app_middleware.dart';
 
@@ -14,7 +15,7 @@ abstract class Routes {
   static const String selection = "/selections";
   static const String model = "/model";
 
-  static const String create = "/create";
+  static const String create = "create";
 }
 
 abstract class AppRoute {
@@ -39,8 +40,13 @@ abstract class AppRoute {
       ],
     ),
     GetPage(
-      name: "${Routes.model}${Routes.create}",
-      page: () => const CreateSelectionModelPage(),
+      name: "${Routes.model}/${Routes.create}",
+      page: () => const CrudSelectionModelPage(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: "${Routes.model}/:id",
+      page: () => const CrudSelectionModelPage(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
@@ -49,9 +55,14 @@ abstract class AppRoute {
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
+      name: "${Routes.selection}/${Routes.create}",
+      page: () => const CrudSelectionPage(),
+      transition: Transition.downToUp,
+    ),
+    GetPage(
       name: "${Routes.selection}/:id",
       page: () => const DetailSelectionPage(),
-      transition: Transition.downToUp,
+      transition: Transition.rightToLeftWithFade,
     ),
   ];
 }

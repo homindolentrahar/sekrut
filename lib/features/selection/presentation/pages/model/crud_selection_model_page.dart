@@ -8,18 +8,21 @@ import 'package:sekrut/core/presentation/widgets/fields.dart';
 import 'package:sekrut/core/presentation/widgets/texts.dart';
 import 'package:sekrut/features/selection/presentation/widgets/add_criteria_sheet.dart';
 import 'package:sekrut/features/selection/presentation/widgets/criteria_item.dart';
+import 'package:sekrut/features/selection/presentation/widgets/selection_model_banner.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 import 'package:sekrut/route/app_route.dart';
 
-class CreateSelectionModelPage extends StatelessWidget {
-  const CreateSelectionModelPage({super.key});
+class CrudSelectionModelPage extends StatelessWidget {
+  const CrudSelectionModelPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PrimaryAppBar(
-        title: "Buat Model Seleksi",
-        showLeading: false,
+      appBar: PrimaryAppBar(
+        title: Get.parameters['id'] != null
+            ? "Edit Model Seleksi"
+            : "Buat Model Seleksi",
+        showLeading: Get.parameters['id'] != null,
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
@@ -51,6 +54,16 @@ class CreateSelectionModelPage extends StatelessWidget {
                 const BoxTextField(
                   name: "desc",
                   hint: "Deskripsi Model",
+                ),
+                Visibility(
+                  visible: Get.parameters['id'] != null,
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 16),
+                      SelectionModelBanner(),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 32),
                 PrimarySubtitle(

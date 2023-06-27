@@ -22,7 +22,7 @@ class SelectionPage extends StatelessWidget {
           color: Get.theme.colorScheme.surface,
         ),
         onPressed: () {
-          Get.toNamed("${Routes.selection}/89");
+          Get.toNamed("${Routes.selection}/${Routes.create}");
         },
       ),
       body: SafeArea(
@@ -52,7 +52,11 @@ class SelectionPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              const SelectionModelBanner(),
+              SelectionModelBanner(
+                onProceedPressed: () {
+                  Get.toNamed("${Routes.model}/1");
+                },
+              ),
               const SizedBox(height: 32),
               const PrimarySubtitle(
                 text: "Hasil Seleksi",
@@ -65,7 +69,7 @@ class SelectionPage extends StatelessWidget {
                 itemCount: 5,
                 itemBuilder: (ctx, index) => SelectionItem(
                   onPressed: (value) {
-                    Get.toNamed("${Routes.selection}/89");
+                    Get.toNamed("${Routes.selection}/$index");
                   },
                 ),
                 separatorBuilder: (ctx, index) => const SizedBox(height: 16),

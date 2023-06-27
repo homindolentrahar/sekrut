@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,7 +42,7 @@ class PrimaryButton extends StatelessWidget {
 class PrimaryIconButton extends StatelessWidget {
   final Widget icon;
   final Color backgroundColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const PrimaryIconButton({
     super.key,
@@ -110,6 +111,65 @@ class PrimaryTextButton extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class PrimaryDottedButton extends StatelessWidget {
+  final Widget? icon;
+  final String title;
+  final double? width;
+  final VoidCallback onPressed;
+
+  const PrimaryDottedButton({
+    super.key,
+    this.icon,
+    required this.title,
+    this.width,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+      color: Get.theme.colorScheme.tertiary,
+      radius: const Radius.circular(8),
+      borderType: BorderType.RRect,
+      padding: EdgeInsets.zero,
+      borderPadding: EdgeInsets.zero,
+      strokeCap: StrokeCap.round,
+      dashPattern: const [8, 8, 8, 8],
+      child: Material(
+        color: Get.theme.colorScheme.surface,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (icon != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      icon ?? const SizedBox.shrink(),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                Text(
+                  title,
+                  style: Get.textTheme.headlineSmall?.copyWith(
+                    color: Get.theme.colorScheme.tertiary,
+                    fontSize: 14,
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

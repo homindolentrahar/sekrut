@@ -74,6 +74,7 @@ class BoxTextField extends StatelessWidget {
   final TextStyle? textStyle;
   final TextStyle? hintStyle;
   final int lines;
+  final Widget? suffixIcon;
   final String? Function(String?)? validators;
 
   const BoxTextField({
@@ -86,6 +87,7 @@ class BoxTextField extends StatelessWidget {
     this.textStyle,
     this.hintStyle,
     this.lines = 1,
+    this.suffixIcon,
     this.validators,
   });
 
@@ -108,7 +110,10 @@ class BoxTextField extends StatelessWidget {
         ),
         hintText: hint,
         hintStyle: hintStyle ??
-            Get.textTheme.titleMedium?.copyWith(color: AppColor.gray),
+            Get.textTheme.titleMedium?.copyWith(
+              color: AppColor.gray,
+            ),
+        suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(

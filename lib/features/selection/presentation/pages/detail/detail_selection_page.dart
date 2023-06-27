@@ -7,6 +7,7 @@ import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/core/presentation/widgets/texts.dart';
 import 'package:sekrut/features/selection/presentation/widgets/alternatif_item.dart';
 import 'package:sekrut/features/selection/presentation/widgets/criteria_percentage.dart';
+import 'package:sekrut/features/selection/presentation/widgets/selection_model_banner.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
 class DetailSelectionPage extends StatelessWidget {
@@ -84,59 +85,7 @@ class DetailSelectionPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Get.theme.colorScheme.onSurface,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Model Seleksi",
-                                style: Get.textTheme.headlineSmall?.copyWith(
-                                  color: Get.theme.colorScheme.tertiary,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "AHP Developer",
-                                style: Get.textTheme.headlineSmall?.copyWith(
-                                  color: Get.theme.colorScheme.surface,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        PrimaryIconButton(
-                          icon: SvgPicture.asset(
-                            Assets.icons.icProceed,
-                            width: 16,
-                            height: 16,
-                            color: Get.theme.colorScheme.background,
-                          ),
-                          backgroundColor: Get.theme.colorScheme.onBackground,
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const CriteriaPercentage(),
-                  ],
-                ),
-              ),
+              const SelectionModelBanner(),
               const SizedBox(height: 32),
               const PrimarySubtitle(text: "Hasil Seleksi"),
               const SizedBox(height: 16),
