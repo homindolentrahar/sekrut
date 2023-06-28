@@ -3,7 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sekrut/features/selection/domain/alternatif.dart';
+import 'package:sekrut/features/selection/domain/models/alternatif.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
 class AlternatifItem extends StatelessWidget {

@@ -3,10 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sekrut/core/presentation/widgets/bars.dart';
-import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/core/presentation/widgets/texts.dart';
 import 'package:sekrut/features/selection/presentation/widgets/alternatif_item.dart';
-import 'package:sekrut/features/selection/presentation/widgets/criteria_percentage.dart';
 import 'package:sekrut/features/selection/presentation/widgets/selection_model_banner.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 

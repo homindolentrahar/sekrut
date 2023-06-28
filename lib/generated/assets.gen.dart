@@ -47,6 +47,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_delete.svg
   String get icDelete => 'assets/icons/ic_delete.svg';
 
+  /// File path: assets/icons/ic_down.svg
+  String get icDown => 'assets/icons/ic_down.svg';
+
   /// File path: assets/icons/ic_drag.svg
   String get icDrag => 'assets/icons/ic_drag.svg';
 
@@ -81,6 +84,7 @@ class $AssetsIconsGen {
         icCollapsed,
         icDate,
         icDelete,
+        icDown,
         icDrag,
         icDragFill,
         icExpanded,

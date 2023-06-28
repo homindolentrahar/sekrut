@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:sekrut/features/selection/domain/alternatif.dart';
+import 'package:sekrut/features/selection/domain/models/alternatif.dart';
 import 'package:sekrut/features/selection/domain/models/ahp_model.dart';
 
 part 'selection.freezed.dart';

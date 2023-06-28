@@ -18,6 +18,15 @@ class CrudSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PrimaryAppBar(title: "Buat Seleksi"),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: PrimaryButton(
+          title: "Buat",
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -73,7 +82,9 @@ class CrudSelectionPage extends StatelessWidget {
                     height: 20,
                   ),
                   title: "Tambah Alternatif",
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed("${Routes.alternative}/${Routes.create}");
+                  },
                 ),
               ],
             ),
