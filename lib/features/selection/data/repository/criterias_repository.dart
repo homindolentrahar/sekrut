@@ -1,5 +1,5 @@
-import 'package:sekrut/core/util/helper/json_helper.dart';
 import 'package:sekrut/features/selection/domain/models/criteria.dart';
+import 'package:sekrut/util/helpers/json_helper.dart';
 
 class CriteriasRepository {
   Future<List<Criteria>> getCriterias() async {

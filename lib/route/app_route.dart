@@ -9,6 +9,7 @@ import 'package:sekrut/features/selection/presentation/pages/model/crud_model_bi
 import 'package:sekrut/features/selection/presentation/pages/selection/crud_selection_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/detail_selection_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/model/crud_model_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/selection/selection_binding.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/selection_page.dart';
 import 'package:sekrut/route/app_middleware.dart';
 
@@ -57,6 +58,7 @@ abstract class AppRoute {
     GetPage(
       name: Routes.selection,
       page: () => const SelectionPage(),
+      binding: SelectionBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(

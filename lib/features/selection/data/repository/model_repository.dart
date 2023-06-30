@@ -10,11 +10,11 @@ class ModelRepository {
     );
   }
 
-  AHPModel? getModel() {
+  AHPModel getModel() {
     final result = StorageHelper.instance.read<Map<String, dynamic>>(
       AppConstants.ahpModelKey,
     );
 
-    return result != null ? AHPModel.fromJson(result) : null;
+    return result != null ? AHPModel.fromJson(result) : AHPModel.empty();
   }
 }

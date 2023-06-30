@@ -14,6 +14,14 @@ sealed class AHPModel with _$AHPModel {
     required List<CriteriaCompact> criterias,
   }) = _AHPModel;
 
+  factory AHPModel.empty() => AHPModel(
+        id: "",
+        title: "No Model",
+        description: "No Desc",
+        dateTime: DateTime.now(),
+        criterias: [],
+      );
+
   factory AHPModel.fromJson(Map<String, dynamic> json) =>
       _$AHPModelFromJson(json);
 }

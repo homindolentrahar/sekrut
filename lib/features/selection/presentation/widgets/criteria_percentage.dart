@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sekrut/core/ui/app_color.dart';
 import 'package:sekrut/features/selection/domain/models/criteria.dart';
+import 'package:sekrut/util/extensions/double_extensions.dart';
+import 'package:sekrut/util/helpers/ahp_calculation.dart';
 
 final colors = {
   'skill': AppColor.skill,
   'sikap': AppColor.sikap,
   'portfolio': AppColor.portfolio,
+  '': Colors.transparent,
 };
 
 class CriteriaPercentage extends StatelessWidget {
-  final List<Criteria>? criterias;
+  final List<CriteriaCompact>? criterias;
 
   const CriteriaPercentage({
     super.key,
@@ -19,20 +22,7 @@ class CriteriaPercentage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dummies = [
-      {
-        "color": AppColor.skill,
-        "value": 40,
-      },
-      {
-        "color": AppColor.sikap,
-        "value": 35,
-      },
-      {
-        "color": AppColor.portfolio,
-        "value": 25,
-      }
-    ];
+    final ahpHelper = AHPCalculation(list: criterias ?? []);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -42,22 +32,22 @@ class CriteriaPercentage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
-            dummies.length,
+            criterias?.length ?? 0,
             (index) => Expanded(
-              flex: ((dummies[index]['value'] as int) / 10).ceil(),
+              flex: ahpHelper.priority[index].toPercent().floor(),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: dummies[index]['color'] as Color,
+                  color: colors[criterias?[index].slug],
                   borderRadius: index == 0
                       ? const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8),
                         )
-                      : index == dummies.length - 1
+                      : index == (criterias?.length ?? 1) - 1
                           ? const BorderRadius.only(
                               topRight: Radius.circular(8),
                               bottomRight: Radius.circular(8),
@@ -65,12 +55,10 @@ class CriteriaPercentage extends StatelessWidget {
                           : null,
                 ),
                 child: Text(
-                  "$index%",
+                  "${ahpHelper.priority[index].toPercent().toStringAsFixed(1)}%",
                   textAlign: TextAlign.center,
                   style: Get.textTheme.headlineSmall?.copyWith(
-                    color: index == 1
-                        ? Get.theme.colorScheme.onSurface
-                        : Get.theme.colorScheme.surface,
+                    color: Get.theme.colorScheme.onSurface,
                     fontSize: 12,
                   ),
                 ),
@@ -82,7 +70,7 @@ class CriteriaPercentage extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
-            dummies.length,
+            criterias?.length ?? 0,
             (index) => Expanded(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -94,12 +82,12 @@ class CriteriaPercentage extends StatelessWidget {
                     height: 16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: dummies[index]['color'] as Color,
+                      color: colors[criterias?[index].slug],
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    "${dummies[index]['value'] as int}",
+                    "${criterias?[index].title}",
                     style: Get.textTheme.headlineSmall?.copyWith(
                       color: Get.theme.colorScheme.surface,
                       fontSize: 12,

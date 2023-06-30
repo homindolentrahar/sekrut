@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sekrut/core/presentation/widgets/buttons.dart';
+import 'package:sekrut/features/selection/domain/models/ahp_model.dart';
 import 'package:sekrut/features/selection/presentation/widgets/criteria_percentage.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
 class SelectionModelBanner extends StatelessWidget {
+  final AHPModel? data;
   final VoidCallback? onProceedPressed;
 
   const SelectionModelBanner({
     super.key,
+    this.data,
     this.onProceedPressed,
   });
 
@@ -42,14 +45,14 @@ class SelectionModelBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "AHP Developer",
+                      data?.title ?? "",
                       style: Get.textTheme.headlineSmall?.copyWith(
                         color: Get.theme.colorScheme.surface,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "Digunakan untuk seleksi Developer menggunakan tiga kriteria utama",
+                      data?.description ?? "",
                       style: Get.textTheme.titleSmall?.copyWith(
                         color: Get.theme.colorScheme.background,
                       ),
@@ -79,7 +82,9 @@ class SelectionModelBanner extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const CriteriaPercentage(),
+          CriteriaPercentage(
+            criterias: data?.criterias,
+          ),
         ],
       ),
     );
