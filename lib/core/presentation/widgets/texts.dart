@@ -22,39 +22,46 @@ class PrimarySubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              text,
-              style: style ?? Get.textTheme.titleMedium,
-            ),
-            if (subText != null)
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 4),
-                  Text(
-                    subText ?? "",
-                    style: subStyle ?? Get.textTheme.bodyMedium,
-                  ),
-                ],
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                text,
+                style: style ?? Get.textTheme.titleMedium,
               ),
-          ],
+              if (subText != null)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 4),
+                    Text(
+                      subText ?? "",
+                      style: subStyle ?? Get.textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
         if (actionText != null)
-          GestureDetector(
-            onTap: onActionPressed,
-            child: Text(
-              actionText ?? "",
-              style: Get.textTheme.headlineSmall?.copyWith(
-                fontSize: 14,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: onActionPressed,
+                child: Text(
+                  actionText ?? "",
+                  style: Get.textTheme.headlineSmall?.copyWith(
+                    fontSize: 14,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
       ],
     );

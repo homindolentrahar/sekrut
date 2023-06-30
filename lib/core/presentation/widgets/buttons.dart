@@ -117,13 +117,13 @@ class PrimaryTextButton extends StatelessWidget {
   }
 }
 
-class PrimaryDottedButton extends StatelessWidget {
+class PrimaryDashedButton extends StatelessWidget {
   final Widget? icon;
   final String title;
   final double? width;
   final VoidCallback onPressed;
 
-  const PrimaryDottedButton({
+  const PrimaryDashedButton({
     super.key,
     this.icon,
     required this.title,

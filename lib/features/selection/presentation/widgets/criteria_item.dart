@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/features/selection/domain/models/criteria.dart';
-import 'package:sekrut/features/selection/presentation/widgets/add_sub_criteria_sheet.dart';
 import 'package:sekrut/features/selection/presentation/widgets/sub_criteria_item.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
 class CriteriaItem extends StatelessWidget {
-  final Criteria? data;
-  final ValueChanged<Criteria?> onPressed;
+  final Criteria data;
+  final Function(int oldIndex, int newIndex, Criteria criteria)
+      onSubCriteriaReordered;
 
   const CriteriaItem({
     super.key,
-    this.data,
-    required this.onPressed,
+    required this.data,
+    required this.onSubCriteriaReordered,
   });
 
   @override
@@ -34,36 +33,33 @@ class CriteriaItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Skill",
-                    style: Get.textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "Lorem ipsum dolor sit amet",
-                    style: Get.textTheme.bodyMedium?.copyWith(
-                      color: Get.theme.colorScheme.background,
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.title,
+                      style: Get.textTheme.headlineSmall,
                     ),
-                  ),
-                ],
-              ),
-              PrimaryIconButton(
-                icon: SvgPicture.asset(
-                  Assets.icons.icDelete,
-                  color: Get.theme.colorScheme.error,
-                  width: 16,
-                  height: 16,
+                    const SizedBox(height: 4),
+                    Text(
+                      data.description,
+                      style: Get.textTheme.bodyMedium?.copyWith(
+                        color: Get.theme.colorScheme.onBackground,
+                      ),
+                    ),
+                  ],
                 ),
-                backgroundColor: Get.theme.colorScheme.error.withOpacity(0.25),
-                onPressed: () {},
               ),
+              SvgPicture.asset(
+                Assets.icons.icDrag,
+                width: 20,
+                height: 20,
+                color: Get.theme.colorScheme.onBackground,
+              )
             ],
           ),
           const SizedBox(height: 16),
@@ -77,28 +73,12 @@ class CriteriaItem extends StatelessWidget {
             ),
             itemBuilder: (ctx, index) => SubCriteriaItem(
               key: ValueKey(index.toString()),
+              data: data.subCriterias[index],
             ),
-            itemCount: 2,
-            onReorder: (oldIndex, newIndex) {},
+            itemCount: data.subCriterias.length,
+            onReorder: (oldIndex, newIndex) =>
+                onSubCriteriaReordered(oldIndex, newIndex, data),
           ),
-          PrimaryTextButton(
-            icon: SvgPicture.asset(
-              Assets.icons.icAdd,
-              color: Get.theme.colorScheme.onSurface,
-              width: 20,
-              height: 20,
-            ),
-            text: "Tambah Sub-Kriteria",
-            fontSize: 14,
-            onPressed: () {
-              Get.bottomSheet(
-                const AddSubCriteriaSheet(
-                  subCriterias: [],
-                  selectedSubCriterias: [],
-                ),
-              );
-            },
-          )
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sekrut/core/constant/app_constants.dart';
 import 'package:sekrut/features/selection/data/repository/criterias_repository.dart';
+import 'package:sekrut/features/selection/data/repository/model_repository.dart';
 
 abstract class AppModule {
   static void inject() {
@@ -12,5 +13,6 @@ abstract class AppModule {
     );
 
     Get.put<CriteriasRepository>(CriteriasRepository());
+    Get.put<ModelRepository>(ModelRepository());
   }
 }

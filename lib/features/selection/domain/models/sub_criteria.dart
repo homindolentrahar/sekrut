@@ -5,21 +5,28 @@ part 'sub_criteria.g.dart';
 
 @freezed
 sealed class SubCriteria with _$SubCriteria {
+  const SubCriteria._();
+
   const factory SubCriteria({
-    int? order,
     required String title,
+    required String slug,
     required String description,
     required List<SubCriteriaOption> options,
   }) = _SubCriteria;
 
   factory SubCriteria.fromJson(Map<String, dynamic> json) =>
       _$SubCriteriaFromJson(json);
+
+  SubCriteriaCompact toCompact() => SubCriteriaCompact(
+        title: title,
+        slug: slug,
+        description: description,
+      );
 }
 
 @freezed
 sealed class SubCriteriaOption with _$SubCriteriaOption {
   const factory SubCriteriaOption({
-    required int order,
     required int value,
     required String title,
     required String description,
@@ -27,4 +34,16 @@ sealed class SubCriteriaOption with _$SubCriteriaOption {
 
   factory SubCriteriaOption.fromJson(Map<String, dynamic> json) =>
       _$SubCriteriaOptionFromJson(json);
+}
+
+@freezed
+sealed class SubCriteriaCompact with _$SubCriteriaCompact {
+  const factory SubCriteriaCompact({
+    required String title,
+    required String slug,
+    required String description,
+  }) = _SubCriteriaCompact;
+
+  factory SubCriteriaCompact.fromJson(Map<String, dynamic> json) =>
+      _$SubCriteriaCompactFromJson(json);
 }

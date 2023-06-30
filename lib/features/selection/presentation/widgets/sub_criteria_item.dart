@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/features/selection/domain/models/sub_criteria.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
 class SubCriteriaItem extends StatelessWidget {
-  final SubCriteria? data;
+  final SubCriteria data;
 
   const SubCriteriaItem({
     super.key,
-    this.data,
+    required this.data,
   });
 
   @override
@@ -36,23 +35,19 @@ class SubCriteriaItem extends StatelessWidget {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              "Pengetahuan",
+              data.title,
               style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           const SizedBox(width: 16),
-          PrimaryIconButton(
-            icon: SvgPicture.asset(
-              Assets.icons.icDelete,
-              color: Get.theme.colorScheme.error,
-              width: 16,
-              height: 16,
-            ),
-            backgroundColor: Get.theme.colorScheme.error.withOpacity(0.25),
-            onPressed: () {},
-          ),
+          SvgPicture.asset(
+            Assets.icons.icDrag,
+            color: Get.theme.colorScheme.tertiary,
+            width: 16,
+            height: 16,
+          )
         ],
       ),
     );

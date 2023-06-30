@@ -5,9 +5,10 @@ import 'package:sekrut/core/presentation/pages/loader/loader_controller.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/alternative/crud_alternative_binding.dart';
 import 'package:sekrut/features/selection/presentation/pages/alternative/crud_alternative_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/model/crud_model_binding.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/crud_selection_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/detail_selection_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/model/crud_selection_model_page.dart';
+import 'package:sekrut/features/selection/presentation/pages/model/crud_model_page.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/selection_page.dart';
 import 'package:sekrut/route/app_middleware.dart';
 
@@ -44,12 +45,13 @@ abstract class AppRoute {
     ),
     GetPage(
       name: "${Routes.model}/${Routes.create}",
-      page: () => const CrudSelectionModelPage(),
+      page: () => const CrudModelPage(),
+      binding: CrudModelBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
       name: "${Routes.model}/:id",
-      page: () => const CrudSelectionModelPage(),
+      page: () => const CrudModelPage(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(

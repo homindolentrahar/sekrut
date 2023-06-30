@@ -8,16 +8,39 @@ import 'package:sekrut/generated/assets.gen.dart';
 
 class AddCriteriaSheet extends StatelessWidget {
   final List<Criteria> criterias;
-  final List<Criteria> selectedCriterias;
+  final List<String> selectedCriterias;
 
-  const AddCriteriaSheet({
+  AddCriteriaSheet({
     super.key,
     required this.criterias,
     required this.selectedCriterias,
   });
 
+  final RxList<Criteria> selected = RxList.empty();
+
+  bool isSelected(String slug) {
+    return selected.map((element) => element.slug).contains(slug);
+  }
+
+  void toggleSelected(Criteria value) {
+    if (selected.map((element) => element.slug).contains(value.slug)) {
+      selected.removeWhere(
+        (element) => element.slug == value.slug,
+      );
+      return;
+    }
+
+    selected.add(value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    selected.addAll(
+      criterias.where(
+        (element) => selectedCriterias.contains(element.slug),
+      ),
+    );
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -27,57 +50,75 @@ class AddCriteriaSheet extends StatelessWidget {
           topRight: Radius.circular(8),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const PrimarySubtitle(text: "Tambah Kriteria"),
-          const SizedBox(height: 32),
-          Wrap(
-            direction: Axis.horizontal,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 16,
-            runSpacing: 16,
-            children: List.generate(
-              3,
-              (index) => _SelectableCriteriaItem(
-                data: null,
-                isSelected: index % 2 == 0,
-                onItemPressed: (value) {},
+      child: Obx(
+        () {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                switchInCurve: Curves.easeInOut,
+                switchOutCurve: Curves.easeInOut,
+                child: PrimarySubtitle(
+                  text: "Tambah Kriteria",
+                  actionText:
+                      selected.isEmpty ? null : "${selected.length} terpilih",
+                ),
               ),
-            ).toList(),
-          ),
-          const SizedBox(height: 32),
-          PrimaryButton(
-            title: "Tambah",
-            onPressed: () {},
-          ),
-        ],
+              const SizedBox(height: 32),
+              Expanded(
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: criterias.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 16,
+                  ),
+                  itemBuilder: (ctx, index) => _SelectableCriteriaItem(
+                    data: criterias[index],
+                    isSelected: isSelected(criterias[index].slug),
+                    onItemPressed: toggleSelected,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+              PrimaryButton(
+                title: "Tambah",
+                onPressed: () {
+                  Get.back(result: selected);
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class _SelectableCriteriaItem extends StatelessWidget {
-  final Criteria? data;
+  final Criteria data;
   final bool isSelected;
-  final ValueChanged<Criteria?> onItemPressed;
+  final ValueChanged<Criteria> onItemPressed;
 
   const _SelectableCriteriaItem({
-    this.data,
+    required this.data,
     this.isSelected = false,
     required this.onItemPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: isSelected
-          ? Get.theme.colorScheme.onSurface
-          : Get.theme.colorScheme.surface,
-      shape: RoundedRectangleBorder(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      decoration: BoxDecoration(
+        color: isSelected
+            ? Get.theme.colorScheme.onSurface
+            : Get.theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
+        border: Border.all(
           color: Get.theme.colorScheme.outline,
           width: isSelected ? 0 : 1,
         ),
@@ -88,43 +129,47 @@ class _SelectableCriteriaItem extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(8),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Visibility(
-                visible: isSelected,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          Assets.icons.icSelected,
-                          width: 20,
-                          height: 20,
-                          color: Get.theme.colorScheme.surface,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Terpilih",
-                          style: Get.textTheme.headlineSmall?.copyWith(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.surface,
+              AnimatedScale(
+                duration: const Duration(milliseconds: 300),
+                scale: isSelected ? 1 : 0,
+                curve: Curves.easeInOut,
+                child: isSelected
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                Assets.icons.icSelected,
+                                width: 20,
+                                height: 20,
+                                color: Get.theme.colorScheme.surface,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "Terpilih",
+                                style: Get.textTheme.headlineSmall?.copyWith(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.surface,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                ),
+                          const SizedBox(height: 16),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ),
               Text(
-                "Skill",
+                data.title,
                 style: Get.textTheme.headlineSmall?.copyWith(
                   color: isSelected
                       ? Get.theme.colorScheme.surface
@@ -133,11 +178,11 @@ class _SelectableCriteriaItem extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                "Lorem ipsum dolor sit amet",
+                data.description,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   color: isSelected
-                      ? Get.theme.colorScheme.tertiary
-                      : Get.theme.colorScheme.background,
+                      ? Get.theme.colorScheme.background
+                      : Get.theme.colorScheme.onBackground,
                 ),
               ),
               const SizedBox(height: 8),
@@ -153,9 +198,9 @@ class _SelectableCriteriaItem extends StatelessWidget {
                         ? Get.theme.colorScheme.surface
                         : Get.theme.colorScheme.onSurface,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 4),
                   Text(
-                    "3 sub-kriteria",
+                    "${data.subCriterias.length} sub-kriteria",
                     style: Get.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: isSelected

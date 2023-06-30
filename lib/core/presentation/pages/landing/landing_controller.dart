@@ -17,7 +17,7 @@ class LandingController extends GetxController {
         username,
       );
 
-      Get.offAllNamed(Routes.model + Routes.create);
+      Get.offAllNamed("${Routes.model}/${Routes.create}");
     }
   }
 }

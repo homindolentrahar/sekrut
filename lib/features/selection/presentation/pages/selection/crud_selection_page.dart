@@ -74,7 +74,7 @@ class CrudSelectionPage extends StatelessWidget {
                   itemCount: 3,
                 ),
                 const SizedBox(height: 16),
-                PrimaryDottedButton(
+                PrimaryDashedButton(
                   icon: SvgPicture.asset(
                     Assets.icons.icAdd,
                     color: Get.theme.colorScheme.tertiary,

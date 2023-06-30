@@ -11,7 +11,7 @@ sealed class AHPModel with _$AHPModel {
     required String title,
     required String description,
     required DateTime dateTime,
-    required List<Criteria> criterias,
+    required List<CriteriaCompact> criterias,
   }) = _AHPModel;
 
   factory AHPModel.fromJson(Map<String, dynamic> json) =>

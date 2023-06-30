@@ -97,11 +97,22 @@ class $AssetsIconsGen {
       ];
 }
 
+class $AssetsJsonsGen {
+  const $AssetsJsonsGen();
+
+  /// File path: assets/jsons/criterias.json
+  String get criterias => 'assets/jsons/criterias.json';
+
+  /// List of all assets
+  List<String> get values => [criterias];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsJsonsGen jsons = $AssetsJsonsGen();
 }
 
 class AssetGenImage {
