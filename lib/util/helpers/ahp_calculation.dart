@@ -1,3 +1,23 @@
+import 'package:sekrut/util/helpers/log_helper.dart';
+
+const Map<int, double> indexRandom = {
+  1: 0.00,
+  2: 0.00,
+  3: 0.58,
+  4: 0.90,
+  5: 1.12,
+  6: 1.24,
+  7: 1.32,
+  8: 1.41,
+  9: 1.45,
+  10: 1.49,
+  11: 1.51,
+  12: 1.48,
+  13: 1.56,
+  14: 1.57,
+  15: 1.59,
+};
+
 class AHPCalculation<T> {
   final List<T> list;
 
@@ -78,7 +98,7 @@ class AHPCalculation<T> {
     return total;
   }
 
-  List<double> get priority {
+  List<double> get priorities {
     final List<double> temp = [];
 
     for (int i = 0; i < totalSecondMatrix.length; i++) {
@@ -86,5 +106,24 @@ class AHPCalculation<T> {
     }
 
     return temp;
+  }
+
+  double get lambdaMax {
+    double temp = 0;
+
+    for (int i = 0; i < priorities.length; i++) {
+      temp += priorities[i] * totalFirstMatrix[i];
+    }
+
+    return temp;
+  }
+
+  bool get isConcistence {
+    final ci = (lambdaMax - length) / (length - 1);
+    final cr = ci / (indexRandom[length] ?? 0);
+
+    LogHelper.instance.debug(message: "CR: $cr");
+
+    return cr < 0.1;
   }
 }

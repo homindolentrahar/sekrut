@@ -35,7 +35,7 @@ class SelectionController extends GetxController {
 
     LogHelper.instance.debug(
       message:
-          "First: ${ahpHelper.firstMatrix}\nTotal 1st: ${ahpHelper.totalFirstMatrix}\nSecond: ${ahpHelper.secondMatrix}\nTotal 2nd: ${ahpHelper.totalSecondMatrix}\nPriority: ${ahpHelper.priority}",
+          "First: ${ahpHelper.firstMatrix}\nTotal 1st: ${ahpHelper.totalFirstMatrix}\nSecond: ${ahpHelper.secondMatrix}\nTotal 2nd: ${ahpHelper.totalSecondMatrix}\nPriority: ${ahpHelper.priorities}\nIs Consistence: ${ahpHelper.isConcistence}",
     );
 
     update();

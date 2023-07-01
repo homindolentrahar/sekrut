@@ -34,7 +34,7 @@ class CriteriaPercentage extends StatelessWidget {
           children: List.generate(
             criterias?.length ?? 0,
             (index) => Expanded(
-              flex: ahpHelper.priority[index].toPercent().floor(),
+              flex: ahpHelper.priorities[index].toPercent().floor(),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,
@@ -55,7 +55,7 @@ class CriteriaPercentage extends StatelessWidget {
                           : null,
                 ),
                 child: Text(
-                  "${ahpHelper.priority[index].toPercent().toStringAsFixed(1)}%",
+                  "${ahpHelper.priorities[index].toPercent().toStringAsFixed(1)}%",
                   textAlign: TextAlign.center,
                   style: Get.textTheme.headlineSmall?.copyWith(
                     color: Get.theme.colorScheme.onSurface,
