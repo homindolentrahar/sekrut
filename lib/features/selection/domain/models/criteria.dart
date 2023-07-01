@@ -28,6 +28,7 @@ class Criteria with _$Criteria {
 
 @freezed
 class CriteriaCompact with _$CriteriaCompact {
+  @JsonSerializable(explicitToJson: true)
   const factory CriteriaCompact({
     required String title,
     required String slug,

@@ -38,6 +38,7 @@ sealed class SubCriteriaOption with _$SubCriteriaOption {
 
 @freezed
 sealed class SubCriteriaCompact with _$SubCriteriaCompact {
+  @JsonSerializable(explicitToJson: true)
   const factory SubCriteriaCompact({
     required String title,
     required String slug,

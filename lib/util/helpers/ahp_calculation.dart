@@ -1,5 +1,3 @@
-import 'package:sekrut/util/helpers/log_helper.dart';
-
 const Map<int, double> indexRandom = {
   1: 0.00,
   2: 0.00,
@@ -121,8 +119,6 @@ class AHPCalculation<T> {
   bool get isConcistence {
     final ci = (lambdaMax - length) / (length - 1);
     final cr = ci / (indexRandom[length] ?? 0);
-
-    LogHelper.instance.debug(message: "CR: $cr");
 
     return cr < 0.1;
   }

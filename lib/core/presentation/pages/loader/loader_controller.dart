@@ -1,16 +1,15 @@
 import 'package:get/get.dart';
-import 'package:sekrut/core/constant/app_constants.dart';
+import 'package:sekrut/core/constant/app_boxes.dart';
 import 'package:sekrut/route/app_route.dart';
-import 'package:sekrut/util/helpers/storage_helper.dart';
+import 'package:sekrut/util/helpers/box_helper.dart';
 
 class LoaderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
 
-    final username = StorageHelper.instance.read<String>(
-      AppConstants.usernameKey,
-    );
+    final box = BoxHelper(name: AppBoxes.app);
+    final username = box.getValue(AppBoxes.usernameKey);
 
     if (username != null) {
       // Navigate to Home

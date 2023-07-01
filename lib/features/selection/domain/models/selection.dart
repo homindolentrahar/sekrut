@@ -17,6 +17,16 @@ sealed class Selection with _$Selection {
     required List<Alternatif> alternatives,
   }) = _Selection;
 
+  factory Selection.empty() => Selection(
+        id: "",
+        name: "",
+        description: "",
+        selectedAlternatives: 0,
+        model: AHPModel.empty(),
+        dateTime: DateTime.now(),
+        alternatives: [],
+      );
+
   factory Selection.fromJson(Map<String, dynamic> json) =>
       _$SelectionFromJson(json);
 }

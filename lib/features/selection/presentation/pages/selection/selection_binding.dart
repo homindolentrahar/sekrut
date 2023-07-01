@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:sekrut/features/selection/data/repository/model_repository.dart';
+import 'package:sekrut/features/selection/data/repository/selection_repository.dart';
 import 'package:sekrut/features/selection/presentation/pages/selection/selection_controller.dart';
 
 class SelectionBinding implements Bindings {
@@ -8,6 +9,7 @@ class SelectionBinding implements Bindings {
     Get.lazyPut<SelectionController>(
       () => SelectionController(
         modelRepository: Get.find<ModelRepository>(),
+        selectionRepository: Get.find<SelectionRepository>(),
       ),
     );
   }

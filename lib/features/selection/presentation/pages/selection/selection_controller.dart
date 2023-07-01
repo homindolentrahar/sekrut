@@ -1,43 +1,49 @@
 import 'package:get/get.dart';
-import 'package:sekrut/core/constant/app_constants.dart';
+import 'package:sekrut/core/constant/app_boxes.dart';
 import 'package:sekrut/features/selection/data/repository/model_repository.dart';
+import 'package:sekrut/features/selection/data/repository/selection_repository.dart';
 import 'package:sekrut/features/selection/domain/models/ahp_model.dart';
-import 'package:sekrut/util/helpers/ahp_calculation.dart';
-import 'package:sekrut/util/helpers/log_helper.dart';
-import 'package:sekrut/util/helpers/storage_helper.dart';
+import 'package:sekrut/features/selection/domain/models/selection.dart';
+import 'package:sekrut/util/helpers/box_helper.dart';
 
 class SelectionController extends GetxController {
   final ModelRepository modelRepository;
+  final SelectionRepository selectionRepository;
 
-  SelectionController({required this.modelRepository});
+  SelectionController(
+      {required this.modelRepository, required this.selectionRepository});
 
   late String username;
   late AHPModel model;
+  List<Selection> selections = [];
 
   @override
   void onInit() {
     super.onInit();
+
+    listenSelections();
 
     getUsername();
     getModel();
   }
 
   void getUsername() {
-    username =
-        StorageHelper.instance.read<String>(AppConstants.usernameKey) ?? "";
+    username = BoxHelper(name: AppBoxes.app).getValue(AppBoxes.usernameKey);
 
     update();
   }
 
   void getModel() {
     model = modelRepository.getModel();
-    final ahpHelper = AHPCalculation(list: model.criterias);
-
-    LogHelper.instance.debug(
-      message:
-          "First: ${ahpHelper.firstMatrix}\nTotal 1st: ${ahpHelper.totalFirstMatrix}\nSecond: ${ahpHelper.secondMatrix}\nTotal 2nd: ${ahpHelper.totalSecondMatrix}\nPriority: ${ahpHelper.priorities}\nIs Consistence: ${ahpHelper.isConcistence}",
-    );
 
     update();
+  }
+
+  void listenSelections() {
+    selectionRepository.getAllSelections().listen((list) {
+      selections = list;
+
+      update();
+    });
   }
 }

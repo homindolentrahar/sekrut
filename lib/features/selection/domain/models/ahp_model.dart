@@ -6,6 +6,7 @@ part 'ahp_model.g.dart';
 
 @freezed
 sealed class AHPModel with _$AHPModel {
+  @JsonSerializable(explicitToJson: true)
   const factory AHPModel({
     required String id,
     required String title,
