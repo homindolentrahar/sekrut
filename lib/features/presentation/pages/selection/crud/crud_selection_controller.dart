@@ -64,6 +64,12 @@ class CrudSelectionController extends GetxController {
     update();
   }
 
+  void removeAlternative(Alternatif data) {
+    alternatives.removeWhere((element) => element.id == data.id);
+
+    update();
+  }
+
   void getModel() {
     model = modelRepository.getModel();
 

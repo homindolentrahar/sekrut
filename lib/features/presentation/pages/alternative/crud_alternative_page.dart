@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:sekrut/core/presentation/widgets/bars.dart';
@@ -8,6 +9,8 @@ import 'package:sekrut/core/presentation/widgets/fields.dart';
 import 'package:sekrut/core/presentation/widgets/texts.dart';
 import 'package:sekrut/features/domain/models/sub_criteria.dart';
 import 'package:sekrut/features/presentation/pages/alternative/crud_alternative_controller.dart';
+import 'package:sekrut/features/presentation/pages/selection/crud/crud_selection_controller.dart';
+import 'package:sekrut/generated/assets.gen.dart';
 
 class CrudAlternativePage extends StatelessWidget {
   const CrudAlternativePage({super.key});
@@ -19,6 +22,23 @@ class CrudAlternativePage extends StatelessWidget {
         return Scaffold(
           appBar: PrimaryAppBar(
             title: controller.isEdit ? "Ubah Alternatif" : "Tambah Alternatif",
+            action: controller.isEdit
+                ? GestureDetector(
+                    onTap: () {
+                      Get.find<CrudSelectionController>().removeAlternative(
+                        controller.alternative.value,
+                      );
+
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                      Assets.icons.icDelete,
+                      width: 20,
+                      height: 20,
+                      color: Get.theme.colorScheme.error,
+                    ),
+                  )
+                : null,
           ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(16),

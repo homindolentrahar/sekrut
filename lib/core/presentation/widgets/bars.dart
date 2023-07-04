@@ -7,6 +7,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showLeading;
   final Widget? leadingIcon;
   final String title;
+  final Widget? action;
   final VoidCallback? onLeadingPressed;
 
   const PrimaryAppBar({
@@ -14,6 +15,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showLeading = true,
     this.leadingIcon,
     required this.title,
+    this.action,
     this.onLeadingPressed,
   });
 
@@ -52,9 +54,21 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall,
+            Expanded(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            Visibility(
+              visible: action != null,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(width: 16),
+                  action ?? const SizedBox.shrink(),
+                ],
+              ),
             ),
           ],
         ),
