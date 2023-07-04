@@ -43,6 +43,9 @@ class UnderlinedTextField extends StatelessWidget {
         hintText: hint,
         hintStyle: hintStyle ??
             Get.textTheme.bodyLarge?.copyWith(color: AppColor.gray),
+        errorStyle: Get.textTheme.titleSmall?.copyWith(
+          color: Get.theme.colorScheme.error,
+        ),
         enabledBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Get.theme.primaryColor, width: 4),
@@ -116,6 +119,9 @@ class BoxTextField extends StatelessWidget {
             Get.textTheme.titleMedium?.copyWith(
               color: AppColor.gray,
             ),
+        errorStyle: Get.textTheme.titleSmall?.copyWith(
+          color: Get.theme.colorScheme.error,
+        ),
         suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -159,14 +165,18 @@ class BoxTextField extends StatelessWidget {
 
 class BoxSelectorField<T> extends StatelessWidget {
   final String name;
-  final String title;
-  final List<T> options;
+  final String? title;
+  final String hint;
+  final T? initialValue;
+  final List options;
   final ValueChanged<T?> onOptionSelected;
 
   const BoxSelectorField({
     super.key,
     required this.name,
     required this.title,
+    required this.hint,
+    this.initialValue,
     required this.options,
     required this.onOptionSelected,
   });
@@ -175,102 +185,185 @@ class BoxSelectorField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderField<T>(
       name: name,
+      initialValue: initialValue,
+      validator: (value) {
+        if (value == null) {
+          return "Item cannot be empty";
+        }
+
+        return null;
+      },
       onChanged: (value) {
         onOptionSelected(value);
       },
-      builder: (field) => GestureDetector(
-        onTap: () async {
-          final T? result = await Get.bottomSheet(
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
-                    top: 24,
-                    bottom: 16,
-                  ),
-                  child: PrimarySubtitle(text: title),
-                ),
-                ...List.generate(
-                  options.length,
-                  (index) => Material(
-                    color: Get.theme.colorScheme.surface,
-                    child: InkWell(
-                      onTap: () {
-                        Get.back(result: options[index]);
-                      },
-                      child: Container(
-                        width: Get.width,
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (options[index] as dynamic).title.toString(),
-                              style: Get.textTheme.headlineSmall,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              (options[index] as dynamic)
-                                  .description
-                                  .toString(),
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                color: Get.theme.colorScheme.onBackground,
+      builder: (field) {
+        final TextEditingController controller = TextEditingController(
+          text: title,
+        );
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FormBuilderTextField(
+              name: "",
+              controller: controller,
+              readOnly: true,
+              onTap: () async {
+                final T? result = await Get.bottomSheet(
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 24,
+                          bottom: 16,
+                        ),
+                        child: PrimarySubtitle(text: hint),
+                      ),
+                      ...List.generate(
+                        options.length,
+                        (index) => Material(
+                          color: initialValue != options[index]
+                              ? Get.theme.colorScheme.surface
+                              : Get.theme.colorScheme.onSurface,
+                          child: InkWell(
+                            onTap: () {
+                              Get.back(result: options[index]);
+                            },
+                            child: Container(
+                              width: Get.width,
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (options[index] as dynamic)
+                                        .title
+                                        .toString(),
+                                    style:
+                                        Get.textTheme.headlineSmall?.copyWith(
+                                      color: initialValue != options[index]
+                                          ? Get.theme.colorScheme.onSurface
+                                          : Get.theme.colorScheme.surface,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    (options[index] as dynamic)
+                                        .description
+                                        .toString(),
+                                    style: Get.textTheme.bodyMedium?.copyWith(
+                                      color: initialValue != options[index]
+                                          ? Get.theme.colorScheme.onBackground
+                                          : Get.theme.colorScheme.background,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ).toList(),
+                    ],
+                  ),
+                  isScrollControlled: true,
+                  backgroundColor: Get.theme.colorScheme.surface,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
                     ),
                   ),
-                ).toList(),
-              ],
-            ),
-            isScrollControlled: true,
-            backgroundColor: Get.theme.colorScheme.surface,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
-          );
+                );
 
-          if (result != null) {
-            field.didChange(result);
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Get.theme.colorScheme.background.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Get.theme.colorScheme.outline),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: Get.textTheme.titleMedium?.copyWith(
+                if (result != null) {
+                  field.didChange(result);
+                }
+              },
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Get.theme.colorScheme.background.withOpacity(0.5),
+                hintText: hint,
+                hintStyle: Get.textTheme.titleMedium?.copyWith(
                   color: Get.theme.colorScheme.tertiary,
                 ),
+                contentPadding: const EdgeInsets.all(16),
+                suffixIcon: SvgPicture.asset(
+                  Assets.icons.icDown,
+                  color: Get.theme.colorScheme.tertiary,
+                  width: 16,
+                  height: 16,
+                ),
+                suffixIconConstraints: const BoxConstraints(
+                  minWidth: 48,
+                  minHeight: 16,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Get.theme.colorScheme.outline),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Get.theme.colorScheme.outline),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: Get.theme.colorScheme.outline),
+                ),
               ),
-              SvgPicture.asset(
-                Assets.icons.icDown,
-                color: Get.theme.colorScheme.tertiary,
-                width: 16,
-                height: 16,
+            ),
+            Visibility(
+              visible: field.hasError,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      field.errorText ?? "",
+                      style: Get.textTheme.titleSmall?.copyWith(
+                        color: Get.theme.colorScheme.error,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          ],
+        );
+      },
+      // child: Container(
+      //   padding: const EdgeInsets.all(16),
+      //   decoration: BoxDecoration(
+      //     color: Get.theme.colorScheme.background.withOpacity(0.5),
+      //     borderRadius: BorderRadius.circular(8),
+      //     border: Border.all(color: Get.theme.colorScheme.outline),
+      //   ),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     crossAxisAlignment: CrossAxisAlignment.center,
+      //     children: [
+      //       Text(
+      //         hint,
+      //         style: Get.textTheme.titleMedium?.copyWith(
+      //           color: Get.theme.colorScheme.tertiary,
+      //         ),
+      //       ),
+      //       SvgPicture.asset(
+      //         Assets.icons.icDown,
+      //         color: Get.theme.colorScheme.tertiary,
+      //         width: 16,
+      //         height: 16,
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
@@ -312,3 +405,23 @@ class BoxSelectorField<T> extends StatelessWidget {
 //     );
 //   }
 // }
+
+class ListItemField<T> extends StatelessWidget {
+  final String name;
+  final Widget listItem;
+  final Widget addItem;
+  final ValueChanged<T?> onItemAdded;
+
+  const ListItemField({
+    super.key,
+    required this.name,
+    required this.listItem,
+    required this.addItem,
+    required this.onItemAdded,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

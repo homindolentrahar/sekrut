@@ -71,6 +71,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic_selected.svg
   String get icSelected => 'assets/icons/ic_selected.svg';
 
+  /// File path: assets/icons/ic_selections_not_found.svg
+  String get icSelectionsNotFound => 'assets/icons/ic_selections_not_found.svg';
+
   /// File path: assets/icons/ic_sub_criteria.svg
   String get icSubCriteria => 'assets/icons/ic_sub_criteria.svg';
 
@@ -92,6 +95,7 @@ class $AssetsIconsGen {
         icModel,
         icProceed,
         icSelected,
+        icSelectionsNotFound,
         icSubCriteria,
         icUser
       ];

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:sekrut/core/constant/app_boxes.dart';
-import 'package:sekrut/features/selection/data/repository/criterias_repository.dart';
-import 'package:sekrut/features/selection/data/repository/model_repository.dart';
-import 'package:sekrut/features/selection/data/repository/selection_repository.dart';
+import 'package:sekrut/features/data/repository/criterias_repository.dart';
+import 'package:sekrut/features/data/repository/model_repository.dart';
+import 'package:sekrut/features/data/repository/selection_repository.dart';
 import 'package:sekrut/util/helpers/box_helper.dart';
 
 abstract class AppModule {

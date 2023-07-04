@@ -3,14 +3,15 @@ import 'package:sekrut/core/presentation/pages/landing/landing_controller.dart';
 import 'package:sekrut/core/presentation/pages/landing/landing_page.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_controller.dart';
 import 'package:sekrut/core/presentation/pages/loader/loader_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/alternative/crud_alternative_binding.dart';
-import 'package:sekrut/features/selection/presentation/pages/alternative/crud_alternative_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/model/crud_model_binding.dart';
-import 'package:sekrut/features/selection/presentation/pages/selection/crud_selection_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/selection/detail_selection_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/model/crud_model_page.dart';
-import 'package:sekrut/features/selection/presentation/pages/selection/selection_binding.dart';
-import 'package:sekrut/features/selection/presentation/pages/selection/selection_page.dart';
+import 'package:sekrut/features/presentation/pages/alternative/crud_alternative_binding.dart';
+import 'package:sekrut/features/presentation/pages/alternative/crud_alternative_page.dart';
+import 'package:sekrut/features/presentation/pages/model/crud_model_binding.dart';
+import 'package:sekrut/features/presentation/pages/selection/crud/crud_selection_binding.dart';
+import 'package:sekrut/features/presentation/pages/selection/crud/crud_selection_page.dart';
+import 'package:sekrut/features/presentation/pages/selection/detail/detail_selection_page.dart';
+import 'package:sekrut/features/presentation/pages/model/crud_model_page.dart';
+import 'package:sekrut/features/presentation/pages/selection/selection_binding.dart';
+import 'package:sekrut/features/presentation/pages/selection/selection_page.dart';
 import 'package:sekrut/route/app_middleware.dart';
 
 abstract class Routes {
@@ -53,6 +54,7 @@ abstract class AppRoute {
     GetPage(
       name: "${Routes.model}/:id",
       page: () => const CrudModelPage(),
+      binding: CrudModelBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
@@ -64,6 +66,7 @@ abstract class AppRoute {
     GetPage(
       name: "${Routes.selection}/${Routes.create}",
       page: () => const CrudSelectionPage(),
+      binding: CrudSelectionBinding(),
       transition: Transition.downToUp,
     ),
     GetPage(
@@ -74,8 +77,14 @@ abstract class AppRoute {
     GetPage(
       name: "${Routes.alternative}/${Routes.create}",
       page: () => const CrudAlternativePage(),
-      transition: Transition.rightToLeftWithFade,
       binding: CrudAlternativeBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: "${Routes.alternative}/:id",
+      page: () => const CrudAlternativePage(),
+      binding: CrudAlternativeBinding(),
+      transition: Transition.rightToLeftWithFade,
     ),
   ];
 }
