@@ -122,7 +122,7 @@ class CrudAlternativePage extends StatelessWidget {
                                               element.slug == criteria.slug,
                                         )
                                         .subCriterias[index]
-                                        .value,
+                                        .option,
                                 name: criteria.subCriterias[index].slug,
                                 hint: criteria.subCriterias[index].title,
                                 title: controller.alternative.value.criterias
@@ -131,7 +131,7 @@ class CrudAlternativePage extends StatelessWidget {
                                           element.slug == criteria.slug,
                                     )
                                     .subCriterias[index]
-                                    .value
+                                    .option
                                     ?.title,
                                 options: criteria.subCriterias[index].options,
                                 onOptionSelected: (value) {
@@ -154,7 +154,7 @@ class CrudAlternativePage extends StatelessWidget {
                                                     criteria.subCriterias[index]
                                                         .slug) {
                                                   subTemp = subTemp.copyWith(
-                                                    value: value,
+                                                    option: value,
                                                   );
                                                 }
 

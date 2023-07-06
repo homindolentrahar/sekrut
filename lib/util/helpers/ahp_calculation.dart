@@ -106,6 +106,12 @@ class AHPCalculation<T> {
     return temp;
   }
 
+  double getPriority(T data) {
+    final foundIndex = list.indexOf(data);
+
+    return priorities[foundIndex];
+  }
+
   double get lambdaMax {
     double temp = 0;
 

@@ -148,7 +148,7 @@ class AlternatifItem extends StatelessWidget {
                                 const SizedBox(height: 4),
                                 Text(
                                   data?.criterias[index].subCriterias[subIndex]
-                                          .value?.title ??
+                                          .option?.title ??
                                       "",
                                   style: Get.textTheme.headlineSmall?.copyWith(
                                     fontSize: 12,

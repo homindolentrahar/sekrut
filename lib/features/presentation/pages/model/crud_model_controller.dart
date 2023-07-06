@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -7,8 +8,61 @@ import 'package:sekrut/features/domain/models/ahp_model.dart';
 import 'package:sekrut/features/domain/models/criteria.dart';
 import 'package:sekrut/features/domain/models/sub_criteria.dart';
 import 'package:sekrut/route/app_route.dart';
+import 'package:sekrut/util/helpers/ahp_calculation.dart';
 import 'package:sekrut/util/helpers/log_helper.dart';
 import 'package:uuid/uuid.dart';
+
+List<Criteria> _calculate(List<Criteria> list) {
+  final List<Criteria> temp = [];
+  final critCalc = AHPCalculation(list: list);
+
+  for (var critIndex = 0; critIndex < list.length; critIndex++) {
+    final criteria = list[critIndex];
+    final subCalc = AHPCalculation(list: criteria.subCriterias);
+    final List<SubCriteria> subs = [];
+
+    for (var subIndex = 0;
+        subIndex < criteria.subCriterias.length;
+        subIndex++) {
+      final List<SubCriteriaOption> options = [];
+      final subCriteria = criteria.subCriterias[subIndex];
+      final optCalc = AHPCalculation(list: subCriteria.options);
+
+      for (var optIndex = 0;
+          optIndex < subCriteria.options.length;
+          optIndex++) {
+        final opt = subCriteria.options[optIndex].copyWith(
+          value: optCalc.getPriority(subCriteria.options[optIndex]),
+        );
+
+        options.add(opt);
+      }
+
+      subs.add(
+        subCriteria.copyWith(
+          value: subCalc.getPriority(subCriteria),
+          options: options,
+        ),
+      );
+    }
+
+    temp.add(
+      criteria.copyWith(
+        value: critCalc.getPriority(list[critIndex]),
+        subCriterias: subs,
+      ),
+    );
+  }
+
+  return temp;
+}
+
+Future<List<Criteria>> calculatePriorities(List<Criteria> list) {
+  return compute(
+    _calculate,
+    list,
+  );
+}
 
 class CrudModelController extends GetxController {
   final CriteriasRepository criteriasRepository;
@@ -37,16 +91,35 @@ class CrudModelController extends GetxController {
   Future<void> save() async {
     if (formKey.currentState!.saveAndValidate()) {
       final value = formKey.currentState!.value;
+      final priorities = await calculatePriorities(criterias);
+
+      LogHelper.instance.debug(
+        message: "Criterias: ${priorities.map((crit) {
+          return {
+            crit.slug: crit.value,
+            "subs": crit.subCriterias.map((sub) {
+              return {
+                sub.slug: sub.value,
+                "options": sub.options.map((opt) {
+                  return {
+                    opt.title: opt.value,
+                  };
+                }),
+              };
+            }),
+          };
+        }).toList()}",
+      );
 
       final ahpModel = AHPModel(
         id: const Uuid().v4(),
         title: value['name'],
         description: value['desc'],
         dateTime: DateTime.now(),
-        criterias: criterias.map((e) => e.toCompact()).toList(),
+        criterias: priorities,
       );
 
-      LogHelper.instance.debug(message: "Model $ahpModel");
+      LogHelper.instance.debug(message: "Model ${ahpModel.criterias}");
 
       modelRepository.saveModel(ahpModel);
 

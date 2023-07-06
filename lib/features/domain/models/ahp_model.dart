@@ -12,7 +12,7 @@ sealed class AHPModel with _$AHPModel {
     required String title,
     required String description,
     required DateTime dateTime,
-    required List<CriteriaCompact> criterias,
+    required List<Criteria> criterias,
   }) = _AHPModel;
 
   factory AHPModel.empty() => AHPModel(

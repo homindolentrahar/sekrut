@@ -46,6 +46,10 @@ class CrudSelectionController extends GetxController {
             .map((e) => Alternatif.fromJson(e))
             .toList(),
       );
+
+      selectionRepository.createSelection(selection);
+
+      Get.back();
     }
   }
 

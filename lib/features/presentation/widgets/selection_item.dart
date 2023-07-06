@@ -36,12 +36,12 @@ class SelectionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Seleksi Web Developer",
+                data?.name ?? "",
                 style: Get.textTheme.headlineSmall,
               ),
               const SizedBox(height: 4),
               Text(
-                "Seleksi Web Developer untuk project SMK 1 Imogiri",
+                data?.description ?? "",
                 style: Get.textTheme.titleSmall?.copyWith(
                   color: Get.theme.colorScheme.onBackground,
                 ),
@@ -63,7 +63,7 @@ class SelectionItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "8 Alternatif",
+                        "${data?.alternatives.length} Alternatif",
                         style: Get.textTheme.headlineSmall?.copyWith(
                           color: Get.theme.colorScheme.tertiary,
                           fontSize: 12,
@@ -84,7 +84,7 @@ class SelectionItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "AHP Model",
+                        data?.model.title ?? "",
                         style: Get.textTheme.headlineSmall?.copyWith(
                           color: Get.theme.colorScheme.tertiary,
                           fontSize: 12,
@@ -105,7 +105,9 @@ class SelectionItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat("dd MMM yyyy, HH:mm").format(DateTime.now()),
+                        DateFormat("dd MMM yyyy, HH:mm").format(
+                          data?.dateTime ?? DateTime.now(),
+                        ),
                         style: Get.textTheme.headlineSmall?.copyWith(
                           color: Get.theme.colorScheme.tertiary,
                           fontSize: 12,
@@ -125,7 +127,8 @@ class SelectionItem extends StatelessWidget {
               const SizedBox(height: 16),
               Column(
                 children: List.generate(
-                  3,
+                  // min(data?.selectedAlternatives ?? 1, 3),
+                  data?.alternatives.length ?? 0,
                   (index) => Padding(
                     padding: const EdgeInsets.all(4),
                     child: Row(
@@ -151,7 +154,7 @@ class SelectionItem extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            "Agus Priyatno",
+                            data?.alternatives[index].name ?? "",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Get.textTheme.headlineSmall?.copyWith(
@@ -162,7 +165,7 @@ class SelectionItem extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          "34,55",
+                          (data?.alternatives[index].result ?? 0).toString(),
                           style: Get.textTheme.headlineSmall?.copyWith(
                             fontSize: 12,
                           ),

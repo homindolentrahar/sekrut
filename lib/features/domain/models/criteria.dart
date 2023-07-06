@@ -9,10 +9,12 @@ part 'criteria.g.dart';
 class Criteria with _$Criteria {
   const Criteria._();
 
+  @JsonSerializable(explicitToJson: true)
   const factory Criteria({
     required String title,
     required String slug,
     required String description,
+    double? value,
     @JsonKey(name: "sub_criterias") required List<SubCriteria> subCriterias,
   }) = _Criteria;
 
@@ -23,6 +25,7 @@ class Criteria with _$Criteria {
         title: title,
         slug: slug,
         description: description,
+        value: value,
         subCriterias: subCriterias.map((e) => e.toCompact()).toList(),
       );
 
@@ -30,6 +33,7 @@ class Criteria with _$Criteria {
         title: title,
         slug: slug,
         description: description,
+        value: value,
         subCriterias: subCriterias.map((e) => e.toForm()).toList(),
       );
 }
@@ -41,6 +45,7 @@ class CriteriaCompact with _$CriteriaCompact {
     required String title,
     required String slug,
     required String description,
+    double? value,
     @JsonKey(name: "sub_criterias")
     required List<SubCriteriaCompact> subCriterias,
   }) = _CriteriaCompact;
@@ -58,6 +63,7 @@ class CriteriaForm with _$CriteriaForm {
     required String title,
     required String slug,
     required String description,
+    double? value,
     @JsonKey(name: "sub_criterias") required List<SubCriteriaForm> subCriterias,
   }) = _CriteriaForm;
 

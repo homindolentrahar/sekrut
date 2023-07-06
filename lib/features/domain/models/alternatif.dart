@@ -7,6 +7,7 @@ part 'alternatif.g.dart';
 
 @freezed
 sealed class Alternatif with _$Alternatif {
+  @JsonSerializable(explicitToJson: true)
   const factory Alternatif({
     required String id,
     required String name,

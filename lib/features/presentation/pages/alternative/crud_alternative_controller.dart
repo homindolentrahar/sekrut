@@ -53,12 +53,21 @@ class CrudAlternativeController extends GetxController {
     if (formKey.currentState!.saveAndValidate()) {
       final formData = formKey.currentState!.value;
 
+      final double result = alternative.value.criterias.fold(
+        0.0,
+        (previousValue, element) => previousValue += element.subCriterias.fold(
+          0.0,
+          (previousValue, element) => previousValue += element.value ?? 0,
+        ),
+      );
+
       Get.back(
         result: alternative.value.copyWith(
           name: formData['name'],
           email: formData['email'],
           contact: formData['contact'],
           dateTime: DateTime.now(),
+          result: result,
         ),
       );
     }

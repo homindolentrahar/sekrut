@@ -9,6 +9,10 @@ class BoxHelper {
     _box = Get.find<Box>(tag: name);
   }
 
+  List<dynamic> getValues() {
+    return _box.values.toList();
+  }
+
   dynamic getValue(String key) {
     return _box.get(key);
   }

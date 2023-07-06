@@ -61,25 +61,22 @@ class CrudSelectionPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     BoxTextField(
-                        name: "alt_count",
-                        hint: "Jumlah Pilihan Alternatif",
-                        keyboardType: TextInputType.number,
-                        action: TextInputAction.done,
-                        suffixIcon: Icon(
-                          Icons.group,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                        validators: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.numeric(),
-                        ])),
-                    const SizedBox(height: 16),
-                    SelectionModelBanner(
-                      data: controller.model,
-                      onProceedPressed: () {
-                        Get.toNamed("${Routes.model}/${controller.model.id}");
-                      },
+                      name: "alt_count",
+                      hint: "Jumlah Pilihan Alternatif",
+                      keyboardType: TextInputType.number,
+                      action: TextInputAction.done,
+                      suffixIcon: Icon(
+                        Icons.group,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                      validators: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
+                      valueTransformer: (value) => int.tryParse(value ?? "0"),
                     ),
+                    const SizedBox(height: 16),
+                    SelectionModelBanner(data: controller.model),
                     const SizedBox(height: 32),
                     FormBuilderField<List<Alternatif>>(
                       name: 'alternatives',
@@ -89,9 +86,9 @@ class CrudSelectionPage extends StatelessWidget {
                           return "Alternatives cannot be empty!";
                         }
 
-                        if ((values?.length ?? 0) < 3) {
-                          return "Alternatives must be at least 3 person";
-                        }
+                        // if ((values?.length ?? 0) < 3) {
+                        //   return "Alternatives must be at least 3 person";
+                        // }
 
                         return null;
                       },

@@ -3,10 +3,12 @@ import 'package:sekrut/features/domain/models/alternatif.dart';
 import 'package:sekrut/features/domain/models/ahp_model.dart';
 
 part 'selection.freezed.dart';
+
 part 'selection.g.dart';
 
 @freezed
 sealed class Selection with _$Selection {
+  @JsonSerializable(explicitToJson: true)
   const factory Selection({
     required String id,
     required String name,

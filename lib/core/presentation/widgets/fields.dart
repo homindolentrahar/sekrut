@@ -71,7 +71,7 @@ class UnderlinedTextField extends StatelessWidget {
   }
 }
 
-class BoxTextField extends StatelessWidget {
+class BoxTextField<T> extends StatelessWidget {
   final String? initValue;
   final String name;
   final String hint;
@@ -81,6 +81,7 @@ class BoxTextField extends StatelessWidget {
   final TextStyle? hintStyle;
   final int lines;
   final Widget? suffixIcon;
+  final ValueTransformer<String?>? valueTransformer;
   final String? Function(String?)? validators;
 
   const BoxTextField({
@@ -94,6 +95,7 @@ class BoxTextField extends StatelessWidget {
     this.hintStyle,
     this.lines = 1,
     this.suffixIcon,
+    this.valueTransformer,
     this.validators,
   });
 
@@ -108,6 +110,7 @@ class BoxTextField extends StatelessWidget {
       style: textStyle ?? Get.textTheme.titleMedium,
       maxLines: lines,
       minLines: lines,
+      valueTransformer: valueTransformer,
       decoration: InputDecoration(
         filled: false,
         contentPadding: const EdgeInsets.symmetric(

@@ -10,17 +10,14 @@
         "description": "Pengalaman kerja kandidat pada bidang pekerjaan",
         "options": [
           {
-            "value": 3,
             "title": "> 5 tahun",
             "description": "Pengalaman kerja > 5 tahun pada bidang pekerjaan terkait"
           },
           {
-            "value": 2,
             "title": "1-5 tahun",
             "description": "Pengalaman kerja 1-5 tahun pada bidang pekerjaan terkait"
           },
           {
-            "value": 1,
             "title": "< 1 tahun",
             "description": "Pengalaman kerja < 1 tahun pada bidang pekerjaan terkait"
           }
@@ -32,17 +29,14 @@
         "description": "Serifikat yang dimiliki kandidat pada bidang pekerjaan",
         "options": [
           {
-            "value": 3,
             "title": "> 5 buah",
             "description": "Jumlah sertifikat > 5 buah pada bidang pekerjaan terkait"
           },
           {
-            "value": 2,
             "title": "< 5 buah",
             "description": "Jumlah sertifikat < 5 buah pada bidang pekerjaan terkait"
           },
           {
-            "value": 1,
             "title": "Tidak ada",
             "description": "Tidak ada sertifikat pada bidang pekerjaan terkait"
           }
@@ -54,27 +48,22 @@
         "description": "Nilai yang dimiliki kandidat selama Interview pada bidang pekerjaan terkait",
         "options": [
           {
-            "value": 5,
             "title": "81-100",
             "description": "Kandidat dapat menjawab semua pertanyaan user dengan tepat"
           },
           {
-            "value": 4,
             "title": "61-80",
             "description": "Kandidat dapat menjawab sebagian besar pertanyaan user dengan tepat, namun ada beberapa jawaban yang salah"
           },
           {
-            "value": 3,
             "title": "41-60",
             "description": "Kandidat dapat menjawab beberapa pertanyaan user dengan tepat, namun menunjukkan sikap proaktif"
           },
           {
-            "value": 2,
             "title": "21-40",
             "description": "Kandidat dapat menjawab beberapa pertanyaan user dengan tepat, namun tidak menunjukkan sikap proaktif"
           },
           {
-            "value": 1,
             "title": "0-20",
             "description": "Kandidat dapat menjawab sedikit pertanyaan user dengan tepat, namun tidak menunjukkan sikap proaktif"
           }
@@ -86,17 +75,14 @@
         "description": "Pengetahuan yang dimiliki kandidat pada bidang pekerjaan terkait",
         "options": [
           {
-            "value": 3,
             "title": "Mahir",
             "description": "Kandidat memiliki pengetahuan mendalam mengenai bidang pekerjaan terkait, telah menemukan metode atau formula baru pada bidang pekerjaan terkait"
           },
           {
-            "value": 2,
             "title": "Menengah",
             "description": "Kandidat memiliki pengetahuan menengah mengenai bidang pekerjaan terkait, masih diperlukan pembelajaran lanjutan yang diawasi supervisor"
           },
           {
-            "value": 1,
             "title": "Dasar",
             "description": "Kandidat memiliki pengetahuan dasar mengenai bidang pekerjaan terkait, perlu adanya bimbingan langsung dari mentor atau supervisor selama beberapa bulan"
           }
@@ -115,17 +101,14 @@
         "description": "Komunikasi kandidat dalam menyampaikan ide, informasi, dan berkomunikasi",
         "options": [
           {
-            "value": 3,
             "title": "Lancar",
             "description": "Kandidat dapat menyampaikan ide dan berkomunikasi dengan sangat baik"
           },
           {
-            "value": 2,
             "title": "Cukup",
             "description": "Kandidat dapat menyampaikan ide dan berkomunikasi dengan cukup baik, namun perlu adanya peningkatan"
           },
           {
-            "value": 1,
             "title": "Kurang",
             "description": "Kandidat tidak dapat menyampaikan ide dan berkomunikasi dengan baik"
           }
@@ -137,12 +120,10 @@
         "description": "Sikap kandidat terhadap rekan kerja maupun client",
         "options": [
           {
-            "value": 2,
             "title": "Baik",
             "description": "Kandidat dapat menunjukkan sikap sopan, profesional, dan menerima kritik"
           },
           {
-            "value": 1,
             "title": "Buruk",
             "description": "Kandidat tidak dapat menunjukkan sikap sopan, profesional, dan menerima kritik"
           }
@@ -161,17 +142,14 @@
         "description": "Pengalaman kandidat dalam mengerjakan beberapa project sebelumnya",
         "options": [
           {
-            "value": 3,
             "title": "Bagus",
             "description": "Hasil pekerjaan project bagus, telah mengerjakan > 5 project pada bidang terkait"
           },
           {
-            "value": 2,
             "title": "Cukup",
             "description": "Hasil pekerjaan project cukup bagus, telah mengerjakan 2 - 5 project pada bidang terkait"
           },
           {
-            "value": 1,
             "title": "Buruk",
             "description": "Hasil pekerjaan project kurang bagus, atau belum pernah mengerjakan project pada bidang terkait"
           }
@@ -183,22 +161,18 @@
         "description": "Minat kandidat pada bidang pekerjaan terkait dan project yang dikerjakan",
         "options": [
           {
-            "value": 4,
             "title": "Tinggi",
             "description": "Kandidat sangat aktif melakukan eksplorasi terhadap bidang pekerjaan terkait atau project yang dikerjakan"
           },
           {
-            "value": 3,
             "title": "Cukup",
             "description": "Kandidat cukup aktif melakukan eksplorasi terhadap bidang pekerjaan terkait"
           },
           {
-            "value": 2,
             "title": "Kurang",
             "description": "Kandidat cukup pasif melakukan eksplorasi terhadap bidang pekerjaan terkait"
           },
           {
-            "value": 1,
             "title": "Tidak Ada",
             "description": "Kandidat tidak melakukan eksplorasi terhadap bidang pekerjaan terkait"
           }
@@ -210,22 +184,18 @@
         "description": "Kemauan belajar kandidat pada bidang pekerjaan terkait dan project yang dikerjakan",
         "options": [
           {
-            "value": 4,
             "title": "Tinggi",
             "description": "Kandidat sangat aktif belajar dan berkolaborasi dengan rekan kerja dalam pengerjaan project"
           },
           {
-            "value": 3,
             "title": "Cukup",
             "description": "Kandidat cukup aktif belajar dan berkolaborasi dengan rekan kerja dalam pengerjaan project"
           },
           {
-            "value": 2,
             "title": "Kurang",
             "description": "Kandidat belajar dan namun tidak berkolaborasi dengan rekan kerja dalam pengerjaan project"
           },
           {
-            "value": 1,
             "title": "Tidak Ada",
             "description": "Kandidat tidak belajar dan tidak berkolaborasi dengan rekan kerja dalam pengerjaan project"
           }

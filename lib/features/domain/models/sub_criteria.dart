@@ -8,10 +8,12 @@ part 'sub_criteria.g.dart';
 sealed class SubCriteria with _$SubCriteria {
   const SubCriteria._();
 
+  @JsonSerializable(explicitToJson: true)
   const factory SubCriteria({
     required String title,
     required String slug,
     required String description,
+    double? value,
     required List<SubCriteriaOption> options,
   }) = _SubCriteria;
 
@@ -22,19 +24,22 @@ sealed class SubCriteria with _$SubCriteria {
         title: title,
         slug: slug,
         description: description,
+        value: value,
       );
 
   SubCriteriaForm toForm() => SubCriteriaForm(
         title: title,
         slug: slug,
         description: description,
+        value: value,
       );
 }
 
 @freezed
 sealed class SubCriteriaOption with _$SubCriteriaOption {
+  @JsonSerializable(explicitToJson: true)
   const factory SubCriteriaOption({
-    required int value,
+    double? value,
     required String title,
     required String description,
   }) = _SubCriteriaOption;
@@ -50,6 +55,7 @@ sealed class SubCriteriaCompact with _$SubCriteriaCompact {
     required String title,
     required String slug,
     required String description,
+    double? value,
   }) = _SubCriteriaCompact;
 
   factory SubCriteriaCompact.fromJson(Map<String, dynamic> json) =>
@@ -63,7 +69,8 @@ sealed class SubCriteriaForm with _$SubCriteriaForm {
     required String title,
     required String slug,
     required String description,
-    SubCriteriaOption? value,
+    double? value,
+    SubCriteriaOption? option,
   }) = _SubCriteriaForm;
 
   factory SubCriteriaForm.fromJson(Map<String, dynamic> json) =>

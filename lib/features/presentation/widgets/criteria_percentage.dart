@@ -13,7 +13,7 @@ final colors = {
 };
 
 class CriteriaPercentage extends StatelessWidget {
-  final List<CriteriaCompact>? criterias;
+  final List<Criteria>? criterias;
 
   const CriteriaPercentage({
     super.key,
@@ -37,7 +37,7 @@ class CriteriaPercentage extends StatelessWidget {
               flex: ahpHelper.priorities[index].toPercent().floor(),
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
+                  horizontal: 4,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class CriteriaPercentage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Get.textTheme.headlineSmall?.copyWith(
                     color: Get.theme.colorScheme.onSurface,
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
               ),
