@@ -25,7 +25,7 @@ class SelectionPage extends StatelessWidget {
               color: Get.theme.colorScheme.surface,
             ),
             onPressed: () {
-              Get.toNamed("${Routes.selection}/${Routes.create}");
+              Get.toNamed("${Routes.selection}/${Routes.crud}");
             },
           ),
           body: SafeArea(
@@ -98,7 +98,12 @@ class SelectionPage extends StatelessWidget {
                           itemBuilder: (ctx, index) => SelectionItem(
                             data: controller.selections[index],
                             onPressed: (value) {
-                              Get.toNamed("${Routes.selection}/$index");
+                              Get.toNamed(
+                                "${Routes.selection}/${value?.id}",
+                                arguments: {
+                                  "data": controller.selections[index],
+                                },
+                              );
                             },
                           ),
                           separatorBuilder: (ctx, index) =>

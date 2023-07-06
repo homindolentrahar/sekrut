@@ -8,14 +8,16 @@ import 'package:sekrut/generated/assets.gen.dart';
 
 class AlternatifItem extends StatelessWidget {
   final Alternatif? data;
-  final int? rank;
+  final int rank;
   final ValueChanged<Alternatif> onItemPressed;
+  final bool isSelected;
 
   const AlternatifItem({
     super.key,
     this.data,
-    this.rank,
+    required this.rank,
     required this.onItemPressed,
+    this.isSelected = false,
   });
 
   @override
@@ -62,29 +64,28 @@ class AlternatifItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Visibility(
-                    visible: rank != null,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(360),
-                          ),
-                          child: Text(
-                            "Peringkat #$rank",
-                            style: Get.textTheme.headlineSmall
-                                ?.copyWith(fontSize: 12),
-                          ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 6,
                         ),
-                        const SizedBox(height: 8),
-                      ],
-                    ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? Get.theme.colorScheme.secondary
+                              : Get.theme.colorScheme.tertiary,
+                          borderRadius: BorderRadius.circular(360),
+                        ),
+                        child: Text(
+                          isSelected ? "Peringkat #$rank" : "Tidak Terpilih",
+                          style: Get.textTheme.headlineSmall
+                              ?.copyWith(fontSize: 12),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
                   ),
                   Text(
                     data?.name ?? "",
@@ -104,6 +105,7 @@ class AlternatifItem extends StatelessWidget {
           collapsed: const SizedBox.shrink(),
           expanded: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
               DottedLine(
@@ -112,13 +114,31 @@ class AlternatifItem extends StatelessWidget {
                 dashLength: 8,
               ),
               const SizedBox(height: 16),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Nilai Kalkulasi: ",
+                    style: Get.textTheme.titleMedium,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    data?.result?.toStringAsFixed(2) ?? "0",
+                    style: Get.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: Wrap(
                   direction: Axis.vertical,
                   spacing: 16,
                   children: List.generate(
-                    3,
+                    data?.criterias.length ?? 0,
                     (index) => Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

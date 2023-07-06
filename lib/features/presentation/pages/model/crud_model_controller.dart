@@ -9,7 +9,6 @@ import 'package:sekrut/features/domain/models/criteria.dart';
 import 'package:sekrut/features/domain/models/sub_criteria.dart';
 import 'package:sekrut/route/app_route.dart';
 import 'package:sekrut/util/helpers/ahp_calculation.dart';
-import 'package:sekrut/util/helpers/log_helper.dart';
 import 'package:uuid/uuid.dart';
 
 List<Criteria> _calculate(List<Criteria> list) {
@@ -93,24 +92,6 @@ class CrudModelController extends GetxController {
       final value = formKey.currentState!.value;
       final priorities = await calculatePriorities(criterias);
 
-      LogHelper.instance.debug(
-        message: "Criterias: ${priorities.map((crit) {
-          return {
-            crit.slug: crit.value,
-            "subs": crit.subCriterias.map((sub) {
-              return {
-                sub.slug: sub.value,
-                "options": sub.options.map((opt) {
-                  return {
-                    opt.title: opt.value,
-                  };
-                }),
-              };
-            }),
-          };
-        }).toList()}",
-      );
-
       final ahpModel = AHPModel(
         id: const Uuid().v4(),
         title: value['name'],
@@ -118,8 +99,6 @@ class CrudModelController extends GetxController {
         dateTime: DateTime.now(),
         criterias: priorities,
       );
-
-      LogHelper.instance.debug(message: "Model ${ahpModel.criterias}");
 
       modelRepository.saveModel(ahpModel);
 

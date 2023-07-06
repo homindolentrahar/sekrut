@@ -20,31 +20,40 @@ class CrudSelectionController extends GetxController {
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   late AHPModel model;
-  List<Alternatif> alternatives = [];
+
+  Selection data = Get.arguments['data'] ?? Selection.empty();
+
+  bool get isEdit => data.id.isNotEmpty;
 
   @override
   void onInit() {
     super.onInit();
 
     getModel();
+
+    LogHelper.instance.debug(message: "Count: ${data.selectedAlternatives}");
   }
 
-  Future<void> create() async {
+  List<Alternatif> get sortedAlternatives {
+    List<Alternatif> temp = [];
+
+    temp = List.from((data.alternatives));
+
+    return temp..sort((a, b) => (b.result ?? 0).compareTo(a.result ?? 0));
+  }
+
+  Future<void> createSelection() async {
     if (formKey.currentState!.saveAndValidate()) {
       final value = formKey.currentState!.value;
 
-      LogHelper.instance.debug(message: "Form value: $value");
-
-      final selection = Selection(
+      final selection = data.copyWith(
         id: const Uuid().v4(),
         name: value['name'],
         description: value['description'],
         selectedAlternatives: value['alt_count'],
         model: model,
         dateTime: DateTime.now(),
-        alternatives: (value['alternatives'] as List<dynamic>)
-            .map((e) => Alternatif.fromJson(e))
-            .toList(),
+        alternatives: sortedAlternatives,
       );
 
       selectionRepository.createSelection(selection);
@@ -53,23 +62,65 @@ class CrudSelectionController extends GetxController {
     }
   }
 
-  void addAlternative(Alternatif data) {
-    alternatives.add(data);
+  Future<void> updateSelection() async {
+    if (formKey.currentState!.saveAndValidate()) {
+      final value = formKey.currentState!.value;
 
-    update();
+      final selection = data.copyWith(
+        name: value['name'],
+        description: value['description'],
+        selectedAlternatives: value['alt_count'],
+        dateTime: DateTime.now(),
+        alternatives: sortedAlternatives,
+      );
+
+      LogHelper.instance.debug(
+        message: "Alts: ${selection.alternatives.map((e) => e.name)}",
+      );
+
+      selectionRepository.updateSelection(selection.id, selection);
+
+      Get.back();
+      Get.back();
+    }
   }
 
-  void updateAlternative(Alternatif data) {
-    final foundIndex = alternatives.indexWhere(
-      (element) => element.id == data.id,
+  void addAlternative(Alternatif value) {
+    final List<Alternatif> tempAlts = List.from(data.alternatives);
+
+    tempAlts.add(value);
+
+    data = data.copyWith(
+      alternatives: tempAlts,
     );
-    alternatives[foundIndex] = data;
 
     update();
   }
 
-  void removeAlternative(Alternatif data) {
-    alternatives.removeWhere((element) => element.id == data.id);
+  void updateAlternative(Alternatif value) {
+    final List<Alternatif> tempAlts = List.from(data.alternatives);
+
+    final foundIndex = tempAlts.indexWhere(
+      (element) => element.id == value.id,
+    );
+
+    tempAlts[foundIndex] = value;
+
+    data = data.copyWith(
+      alternatives: tempAlts,
+    );
+
+    update();
+  }
+
+  void removeAlternative(Alternatif value) {
+    final List<Alternatif> tempAlts = List.from(data.alternatives);
+
+    tempAlts.removeWhere((element) => element.id == value.id);
+
+    data = data.copyWith(
+      alternatives: tempAlts,
+    );
 
     update();
   }

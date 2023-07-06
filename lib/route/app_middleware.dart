@@ -16,7 +16,7 @@ class AppMiddleware extends GetMiddleware {
         return const RouteSettings(name: Routes.selection);
       }
 
-      return const RouteSettings(name: "${Routes.model}/${Routes.create}");
+      return const RouteSettings(name: "${Routes.model}/${Routes.crud}");
     }
 
     return null;

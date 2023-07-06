@@ -8,6 +8,7 @@ import 'package:sekrut/features/presentation/pages/alternative/crud_alternative_
 import 'package:sekrut/features/presentation/pages/model/crud_model_binding.dart';
 import 'package:sekrut/features/presentation/pages/selection/crud/crud_selection_binding.dart';
 import 'package:sekrut/features/presentation/pages/selection/crud/crud_selection_page.dart';
+import 'package:sekrut/features/presentation/pages/selection/detail/detail_selection_binding.dart';
 import 'package:sekrut/features/presentation/pages/selection/detail/detail_selection_page.dart';
 import 'package:sekrut/features/presentation/pages/model/crud_model_page.dart';
 import 'package:sekrut/features/presentation/pages/selection/selection_binding.dart';
@@ -21,7 +22,7 @@ abstract class Routes {
   static const String model = "/models";
   static const String alternative = "/alternative";
 
-  static const String create = "create";
+  static const String crud = "crud";
 }
 
 abstract class AppRoute {
@@ -46,7 +47,7 @@ abstract class AppRoute {
       ],
     ),
     GetPage(
-      name: "${Routes.model}/${Routes.create}",
+      name: "${Routes.model}/${Routes.crud}",
       page: () => const CrudModelPage(),
       binding: CrudModelBinding(),
       transition: Transition.rightToLeftWithFade,
@@ -64,7 +65,7 @@ abstract class AppRoute {
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
-      name: "${Routes.selection}/${Routes.create}",
+      name: "${Routes.selection}/${Routes.crud}",
       page: () => const CrudSelectionPage(),
       binding: CrudSelectionBinding(),
       transition: Transition.downToUp,
@@ -72,10 +73,11 @@ abstract class AppRoute {
     GetPage(
       name: "${Routes.selection}/:id",
       page: () => const DetailSelectionPage(),
+      binding: DetailSelectionBinding(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
-      name: "${Routes.alternative}/${Routes.create}",
+      name: "${Routes.alternative}/${Routes.crud}",
       page: () => const CrudAlternativePage(),
       binding: CrudAlternativeBinding(),
       transition: Transition.rightToLeftWithFade,

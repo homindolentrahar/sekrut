@@ -22,14 +22,16 @@ class CrudSelectionPage extends StatelessWidget {
     return GetBuilder<CrudSelectionController>(
       builder: (controller) {
         return Scaffold(
-          appBar: const PrimaryAppBar(title: "Buat Seleksi"),
+          appBar: PrimaryAppBar(
+            title: controller.isEdit ? "Ubah Seleksi" : "Buat Seleksi",
+          ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(16),
             child: PrimaryButton(
-              title: "Buat",
-              onPressed: () {
-                controller.create();
-              },
+              title: controller.isEdit ? "Ubah" : "Buat",
+              onPressed: () => controller.isEdit
+                  ? controller.updateSelection()
+                  : controller.createSelection(),
             ),
           ),
           body: SafeArea(
@@ -45,6 +47,7 @@ class CrudSelectionPage extends StatelessWidget {
                 child: Column(
                   children: [
                     BoxTextField(
+                      initValue: controller.data.name,
                       name: "name",
                       hint: "Nama Seleksi",
                       action: TextInputAction.next,
@@ -53,7 +56,8 @@ class CrudSelectionPage extends StatelessWidget {
                       ]),
                     ),
                     const SizedBox(height: 16),
-                    const BoxTextField(
+                    BoxTextField(
+                      initValue: controller.data.description,
                       name: "description",
                       hint: "Deskripsi Seleksi",
                       lines: 3,
@@ -61,6 +65,8 @@ class CrudSelectionPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     BoxTextField(
+                      initValue:
+                          controller.data.selectedAlternatives.toString(),
                       name: "alt_count",
                       hint: "Jumlah Pilihan Alternatif",
                       keyboardType: TextInputType.number,
@@ -80,7 +86,7 @@ class CrudSelectionPage extends StatelessWidget {
                     const SizedBox(height: 32),
                     FormBuilderField<List<Alternatif>>(
                       name: 'alternatives',
-                      initialValue: controller.alternatives,
+                      initialValue: controller.sortedAlternatives,
                       validator: (values) {
                         if (values?.isEmpty ?? false) {
                           return "Alternatives cannot be empty!";
@@ -105,7 +111,10 @@ class CrudSelectionPage extends StatelessWidget {
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (ctx, index) => AlternatifItem(
-                                data: controller.alternatives[index],
+                                rank: index + 1,
+                                isSelected: index <
+                                    controller.data.selectedAlternatives,
+                                data: controller.sortedAlternatives[index],
                                 onItemPressed: (value) async {
                                   final result = await Get.toNamed(
                                     "${Routes.alternative}/${value.id}",
@@ -120,7 +129,7 @@ class CrudSelectionPage extends StatelessWidget {
                               separatorBuilder: (ctx, index) => const SizedBox(
                                 height: 16,
                               ),
-                              itemCount: controller.alternatives.length,
+                              itemCount: controller.sortedAlternatives.length,
                             ),
                             const SizedBox(height: 16),
                             PrimaryDashedButton(
@@ -133,7 +142,7 @@ class CrudSelectionPage extends StatelessWidget {
                               title: "Tambah Alternatif",
                               onPressed: () async {
                                 final result = await Get.toNamed(
-                                  "${Routes.alternative}/${Routes.create}",
+                                  "${Routes.alternative}/${Routes.crud}",
                                 );
 
                                 if (result != null) {
