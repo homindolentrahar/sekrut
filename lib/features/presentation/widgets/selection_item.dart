@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sekrut/features/domain/models/alternatif.dart';
 import 'package:sekrut/features/domain/models/selection.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 
@@ -15,6 +18,14 @@ class SelectionItem extends StatelessWidget {
     this.data,
     this.onPressed,
   });
+
+  List<Alternatif> sortedAlternatives() {
+    List<Alternatif> temp = [];
+
+    temp = List.from((data?.alternatives ?? []));
+
+    return temp..sort((a, b) => (b.result ?? 0).compareTo(a.result ?? 0));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +138,7 @@ class SelectionItem extends StatelessWidget {
               const SizedBox(height: 16),
               Column(
                 children: List.generate(
-                  // min(data?.selectedAlternatives ?? 1, 3),
-                  data?.alternatives.length ?? 0,
+                  min(sortedAlternatives().length, 3),
                   (index) => Padding(
                     padding: const EdgeInsets.all(4),
                     child: Row(
@@ -154,7 +164,7 @@ class SelectionItem extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            data?.alternatives[index].name ?? "",
+                            sortedAlternatives()[index].name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Get.textTheme.headlineSmall?.copyWith(
@@ -165,7 +175,8 @@ class SelectionItem extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          (data?.alternatives[index].result ?? 0).toString(),
+                          (sortedAlternatives()[index].result ?? 0)
+                              .toStringAsFixed(3),
                           style: Get.textTheme.headlineSmall?.copyWith(
                             fontSize: 12,
                           ),

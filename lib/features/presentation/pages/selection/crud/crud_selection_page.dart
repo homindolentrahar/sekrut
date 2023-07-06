@@ -86,9 +86,9 @@ class CrudSelectionPage extends StatelessWidget {
                           return "Alternatives cannot be empty!";
                         }
 
-                        // if ((values?.length ?? 0) < 3) {
-                        //   return "Alternatives must be at least 3 person";
-                        // }
+                        if ((values?.length ?? 0) < 3) {
+                          return "Alternatives must be at least 3 person";
+                        }
 
                         return null;
                       },

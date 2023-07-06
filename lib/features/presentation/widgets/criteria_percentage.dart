@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sekrut/core/ui/app_color.dart';
 import 'package:sekrut/features/domain/models/criteria.dart';
 import 'package:sekrut/util/extensions/double_extensions.dart';
-import 'package:sekrut/util/helpers/ahp_calculation.dart';
 
 final colors = {
   'skill': AppColor.skill,
@@ -13,17 +12,15 @@ final colors = {
 };
 
 class CriteriaPercentage extends StatelessWidget {
-  final List<Criteria>? criterias;
+  final List<Criteria> criterias;
 
   const CriteriaPercentage({
     super.key,
-    this.criterias,
+    this.criterias = const [],
   });
 
   @override
   Widget build(BuildContext context) {
-    final ahpHelper = AHPCalculation(list: criterias ?? []);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -32,22 +29,22 @@ class CriteriaPercentage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
-            criterias?.length ?? 0,
+            criterias.length,
             (index) => Expanded(
-              flex: ahpHelper.priorities[index].toPercent().floor(),
+              flex: (criterias[index].value ?? 0).toPercent().floor(),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 4,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: colors[criterias?[index].slug],
+                  color: colors[criterias[index].slug],
                   borderRadius: index == 0
                       ? const BorderRadius.only(
                           topLeft: Radius.circular(8),
                           bottomLeft: Radius.circular(8),
                         )
-                      : index == (criterias?.length ?? 1) - 1
+                      : index == criterias.length - 1
                           ? const BorderRadius.only(
                               topRight: Radius.circular(8),
                               bottomRight: Radius.circular(8),
@@ -55,7 +52,7 @@ class CriteriaPercentage extends StatelessWidget {
                           : null,
                 ),
                 child: Text(
-                  "${ahpHelper.priorities[index].toPercent().toStringAsFixed(1)}%",
+                  "${criterias[index].value?.toPercent().toStringAsFixed(1)}%",
                   textAlign: TextAlign.center,
                   style: Get.textTheme.headlineSmall?.copyWith(
                     color: Get.theme.colorScheme.onSurface,
@@ -70,7 +67,7 @@ class CriteriaPercentage extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
-            criterias?.length ?? 0,
+            criterias.length,
             (index) => Expanded(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -82,12 +79,12 @@ class CriteriaPercentage extends StatelessWidget {
                     height: 16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: colors[criterias?[index].slug],
+                      color: colors[criterias[index].slug],
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    "${criterias?[index].title}",
+                    criterias[index].title,
                     style: Get.textTheme.headlineSmall?.copyWith(
                       color: Get.theme.colorScheme.surface,
                       fontSize: 12,

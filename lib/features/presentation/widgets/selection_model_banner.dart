@@ -83,7 +83,7 @@ class SelectionModelBanner extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           CriteriaPercentage(
-            criterias: data?.criterias,
+            criterias: data?.criterias ?? [],
           ),
         ],
       ),

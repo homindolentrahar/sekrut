@@ -37,6 +37,35 @@ class CrudAlternativeController extends GetxController {
     if (formKey.currentState!.saveAndValidate()) {
       final formData = formKey.currentState!.value;
 
+      final double result =
+          alternative.value.criterias.fold(0.0, (tempCrit, crit) {
+        final critValue = crit.value ?? 0;
+        final subValue = crit.subCriterias.fold(0.0, (tempSub, sub) {
+          final value = sub.value ?? 0;
+          final optValue = sub.option?.value ?? 0;
+
+          return tempSub += (value * optValue);
+        });
+
+        return tempCrit += (critValue * subValue);
+      });
+
+      LogHelper.instance.debug(message: "Result: $result");
+
+      final log = alternative.value.criterias.map((crit) {
+        return {
+          crit.title: crit.value,
+          "subs": crit.subCriterias.map((sub) {
+            return {
+              sub.title: sub.value,
+              sub.option?.title: sub.option?.value,
+            };
+          }).toList(),
+        };
+      });
+
+      LogHelper.instance.debug(message: "Priorities: $log");
+
       Get.back(
         result: alternative.value.copyWith(
           id: const Uuid().v4(),
@@ -44,6 +73,7 @@ class CrudAlternativeController extends GetxController {
           email: formData['email'],
           contact: formData['contact'],
           dateTime: DateTime.now(),
+          result: result,
         ),
       );
     }
@@ -53,13 +83,34 @@ class CrudAlternativeController extends GetxController {
     if (formKey.currentState!.saveAndValidate()) {
       final formData = formKey.currentState!.value;
 
-      final double result = alternative.value.criterias.fold(
-        0.0,
-        (previousValue, element) => previousValue += element.subCriterias.fold(
-          0.0,
-          (previousValue, element) => previousValue += element.value ?? 0,
-        ),
-      );
+      final double result =
+          alternative.value.criterias.fold(0.0, (tempCrit, crit) {
+        final critValue = crit.value ?? 0;
+        final subValue = crit.subCriterias.fold(0.0, (tempSub, sub) {
+          final value = sub.value ?? 0;
+          final optValue = sub.option?.value ?? 0;
+
+          return tempSub += (value * optValue);
+        });
+
+        return tempCrit += (critValue * subValue);
+      });
+
+      LogHelper.instance.debug(message: "Result: $result");
+
+      final log = alternative.value.criterias.map((crit) {
+        return {
+          crit.title: crit.value,
+          "subs": crit.subCriterias.map((sub) {
+            return {
+              sub.title: sub.value,
+              sub.option?.title: sub.option?.value,
+            };
+          }).toList(),
+        };
+      });
+
+      LogHelper.instance.debug(message: "Priorities: $log");
 
       Get.back(
         result: alternative.value.copyWith(
@@ -74,17 +125,7 @@ class CrudAlternativeController extends GetxController {
   }
 
   Future<void> loadCriterias() async {
-    final List<Criteria> temp = [];
-
-    final result = await criteriaRepository.getCriterias();
-
-    modelRepository.getModel().criterias.map((e) => e.slug).toList().forEach(
-          (slug) => temp.add(
-            result.firstWhere((element) => element.slug == slug),
-          ),
-        );
-
-    criterias = temp;
+    criterias = modelRepository.getModel().criterias;
 
     isEdit = Get.parameters['id'] != null;
 
