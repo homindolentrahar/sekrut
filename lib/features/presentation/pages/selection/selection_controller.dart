@@ -24,9 +24,9 @@ class SelectionController extends GetxController {
     super.onInit();
 
     listenSelections();
+    listenModel();
 
     getUsername();
-    getModel();
   }
 
   void getUsername() {
@@ -35,10 +35,12 @@ class SelectionController extends GetxController {
     update();
   }
 
-  void getModel() {
-    model = modelRepository.getModel();
+  void listenModel() {
+    modelRepository.listenModel().listen((data) {
+      model = data;
 
-    update();
+      update();
+    });
   }
 
   void listenSelections() {

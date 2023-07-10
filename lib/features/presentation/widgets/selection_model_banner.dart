@@ -8,11 +8,15 @@ import 'package:sekrut/generated/assets.gen.dart';
 
 class SelectionModelBanner extends StatelessWidget {
   final AHPModel? data;
+  final String? title;
+  final bool showPercentageOnly;
   final VoidCallback? onProceedPressed;
 
   const SelectionModelBanner({
     super.key,
     this.data,
+    this.title,
+    this.showPercentageOnly = false,
     this.onProceedPressed,
   });
 
@@ -29,57 +33,66 @@ class SelectionModelBanner extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Model Seleksi",
+            title ?? "Model Seleksi",
             style: Get.textTheme.titleSmall?.copyWith(
               color: Get.theme.colorScheme.tertiary,
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Visibility(
+            visible: !showPercentageOnly,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      data?.title ?? "",
-                      style: Get.textTheme.headlineSmall?.copyWith(
-                        color: Get.theme.colorScheme.surface,
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data?.title ?? "",
+                            style: Get.textTheme.headlineSmall?.copyWith(
+                              color: Get.theme.colorScheme.surface,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            data?.description ?? "",
+                            style: Get.textTheme.titleSmall?.copyWith(
+                              color: Get.theme.colorScheme.background,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      data?.description ?? "",
-                      style: Get.textTheme.titleSmall?.copyWith(
-                        color: Get.theme.colorScheme.background,
+                    Visibility(
+                      visible: onProceedPressed != null,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(width: 16),
+                          PrimaryIconButton(
+                            icon: SvgPicture.asset(
+                              Assets.icons.icProceed,
+                              width: 16,
+                              height: 16,
+                              color: Get.theme.colorScheme.surface,
+                            ),
+                            backgroundColor: Get.theme.colorScheme.onBackground,
+                            onPressed: onProceedPressed,
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
-              Visibility(
-                visible: onProceedPressed != null,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(width: 16),
-                    PrimaryIconButton(
-                      icon: SvgPicture.asset(
-                        Assets.icons.icProceed,
-                        width: 16,
-                        height: 16,
-                        color: Get.theme.colorScheme.surface,
-                      ),
-                      backgroundColor: Get.theme.colorScheme.onBackground,
-                      onPressed: onProceedPressed,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 16),
           CriteriaPercentage(

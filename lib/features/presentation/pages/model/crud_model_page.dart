@@ -16,21 +16,20 @@ class CrudModelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CrudModelController>(
-      builder: (controlller) {
+      builder: (controller) {
         return Scaffold(
           appBar: PrimaryAppBar(
-            title: Get.parameters['id'] != null
-                ? "Edit Model Seleksi"
-                : "Buat Model Seleksi",
-            showLeading: Get.parameters['id'] != null,
+            title:
+                controller.isEdit ? "Edit Model Seleksi" : "Buat Model Seleksi",
+            showLeading: controller.isEdit,
           ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               title: "Simpan",
-              onPressed: () {
-                controlller.save();
-              },
+              onPressed: controller.isEdit
+                  ? controller.updateModel
+                  : controller.saveModel,
             ),
           ),
           body: SafeArea(
@@ -42,12 +41,13 @@ class CrudModelPage extends StatelessWidget {
                 bottom: 24,
               ),
               child: FormBuilder(
-                key: controlller.formKey,
+                key: controller.formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     BoxTextField(
+                      initValue: controller.data.title,
                       name: "name",
                       hint: "Nama Model",
                       action: TextInputAction.next,
@@ -57,7 +57,8 @@ class CrudModelPage extends StatelessWidget {
                       ]),
                     ),
                     const SizedBox(height: 16),
-                    const BoxTextField(
+                    BoxTextField(
+                      initValue: controller.data.description,
                       name: "desc",
                       hint: "Deskripsi Model",
                       lines: 3,
@@ -65,11 +66,15 @@ class CrudModelPage extends StatelessWidget {
                     ),
                     Visibility(
                       visible: Get.parameters['id'] != null,
-                      child: const Column(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(height: 16),
-                          SelectionModelBanner(),
+                          const SizedBox(height: 16),
+                          SelectionModelBanner(
+                            data: controller.data,
+                            title: "Persentase",
+                            showPercentageOnly: true,
+                          ),
                         ],
                       ),
                     ),
@@ -84,12 +89,12 @@ class CrudModelPage extends StatelessWidget {
                     ReorderableListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: controlller.criterias.length,
+                      itemCount: controller.criterias.length,
                       itemBuilder: (ctx, index) => CriteriaItem(
                         key: ValueKey(index.toString()),
-                        data: controlller.criterias[index],
+                        data: controller.criterias[index],
                         onSubCriteriaReordered:
-                            controlller.onSubCriteriaReordered,
+                            controller.onSubCriteriaReordered,
                       ),
                       proxyDecorator: (child, index, animation) {
                         return AnimatedScale(
@@ -99,7 +104,7 @@ class CrudModelPage extends StatelessWidget {
                           child: child,
                         );
                       },
-                      onReorder: controlller.onCriteriaReordered,
+                      onReorder: controller.onCriteriaReordered,
                     ),
                   ],
                 ),

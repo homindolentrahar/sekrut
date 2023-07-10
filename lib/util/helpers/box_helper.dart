@@ -25,6 +25,10 @@ class BoxHelper {
     return _box.add(value);
   }
 
+  Stream<dynamic> listenValue(String key) {
+    return _box.watch().map((event) => _box.get(key));
+  }
+
   Stream<List<dynamic>> listenValues() async* {
     yield* _box.watch().map((event) => _box.values.toList());
   }

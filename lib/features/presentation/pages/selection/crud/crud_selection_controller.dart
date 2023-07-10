@@ -21,7 +21,7 @@ class CrudSelectionController extends GetxController {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   late AHPModel model;
 
-  Selection data = Get.arguments['data'] ?? Selection.empty();
+  Selection data = Get.arguments?['data'] ?? Selection.empty();
 
   bool get isEdit => data.id.isNotEmpty;
 

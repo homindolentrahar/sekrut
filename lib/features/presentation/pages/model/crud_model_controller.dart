@@ -73,7 +73,10 @@ class CrudModelController extends GetxController {
   });
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  List<Criteria> criterias = [];
+  final AHPModel data = Get.arguments?['data'] ?? AHPModel.empty();
+  late List<Criteria> criterias;
+
+  bool get isEdit => Get.parameters['id'] != null;
 
   @override
   void onInit() {
@@ -83,16 +86,21 @@ class CrudModelController extends GetxController {
   }
 
   Future<void> loadCriterias() async {
-    criterias = await criteriasRepository.getCriterias();
+    criterias = List.from(data.criterias);
+
+    if (criterias.isEmpty) {
+      criterias = await criteriasRepository.getCriterias();
+    }
+
     update();
   }
 
-  Future<void> save() async {
+  Future<void> saveModel() async {
     if (formKey.currentState!.saveAndValidate()) {
       final value = formKey.currentState!.value;
       final priorities = await calculatePriorities(criterias);
 
-      final ahpModel = AHPModel(
+      final ahpModel = data.copyWith(
         id: const Uuid().v4(),
         title: value['name'],
         description: value['desc'],
@@ -103,6 +111,24 @@ class CrudModelController extends GetxController {
       modelRepository.saveModel(ahpModel);
 
       Get.offAllNamed(Routes.selection);
+    }
+  }
+
+  Future<void> updateModel() async {
+    if (formKey.currentState!.saveAndValidate()) {
+      final value = formKey.currentState!.value;
+      final priorities = await calculatePriorities(criterias);
+
+      final ahpModel = data.copyWith(
+        title: value['name'],
+        description: value['desc'],
+        dateTime: DateTime.now(),
+        criterias: priorities,
+      );
+
+      modelRepository.saveModel(ahpModel);
+
+      Get.back();
     }
   }
 

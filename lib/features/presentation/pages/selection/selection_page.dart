@@ -58,7 +58,12 @@ class SelectionPage extends StatelessWidget {
                   SelectionModelBanner(
                     data: controller.model,
                     onProceedPressed: () {
-                      Get.toNamed("${Routes.model}/1");
+                      Get.toNamed(
+                        "${Routes.model}/${controller.model.id}",
+                        arguments: {
+                          'data': controller.model,
+                        },
+                      );
                     },
                   ),
                   const SizedBox(height: 32),

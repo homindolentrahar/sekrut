@@ -15,7 +15,10 @@ class LandingController extends GetxController {
       final appBox = Get.find<Box>(tag: AppBoxes.app);
       appBox.put(AppBoxes.usernameKey, username);
 
-      Get.offAllNamed("${Routes.model}/${Routes.crud}");
+      Get.offAllNamed(
+        "${Routes.model}/${Routes.crud}",
+        arguments: null,
+      );
     }
   }
 }

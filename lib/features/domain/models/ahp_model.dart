@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sekrut/features/domain/models/criteria.dart';
 
 part 'ahp_model.freezed.dart';
+
 part 'ahp_model.g.dart';
 
 @freezed
@@ -17,8 +18,8 @@ sealed class AHPModel with _$AHPModel {
 
   factory AHPModel.empty() => AHPModel(
         id: "",
-        title: "No Model",
-        description: "No Desc",
+        title: "",
+        description: "",
         dateTime: DateTime.now(),
         criterias: [],
       );
