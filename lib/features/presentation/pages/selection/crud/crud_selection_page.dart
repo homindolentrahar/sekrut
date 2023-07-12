@@ -82,7 +82,10 @@ class CrudSelectionPage extends StatelessWidget {
                       valueTransformer: (value) => int.tryParse(value ?? "0"),
                     ),
                     const SizedBox(height: 16),
-                    SelectionModelBanner(data: controller.model),
+                    SelectionModelBanner(
+                      data: controller.model,
+                      intensities: controller.intensities,
+                    ),
                     const SizedBox(height: 32),
                     FormBuilderField<List<Alternatif>>(
                       name: 'alternatives',

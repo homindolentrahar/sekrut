@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:sekrut/features/data/repository/intensity_repository.dart';
 import 'package:sekrut/features/data/repository/model_repository.dart';
 import 'package:sekrut/features/data/repository/selection_repository.dart';
 import 'package:sekrut/features/domain/models/ahp_model.dart';
 import 'package:sekrut/features/domain/models/alternatif.dart';
+import 'package:sekrut/features/domain/models/intensity.dart';
 import 'package:sekrut/features/domain/models/selection.dart';
 import 'package:sekrut/util/helpers/log_helper.dart';
 import 'package:uuid/uuid.dart';
@@ -12,16 +14,19 @@ import 'package:uuid/uuid.dart';
 class CrudSelectionController extends GetxController {
   final SelectionRepository selectionRepository;
   final ModelRepository modelRepository;
+  final IntensityRepository intensityRepository;
 
   CrudSelectionController({
     required this.selectionRepository,
     required this.modelRepository,
+    required this.intensityRepository,
   });
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   late AHPModel model;
 
   Selection data = Get.arguments?['data'] ?? Selection.empty();
+  Map<String, List<IntensityValue>> intensities = {};
 
   bool get isEdit => data.id.isNotEmpty;
 
@@ -127,6 +132,9 @@ class CrudSelectionController extends GetxController {
 
   void getModel() {
     model = modelRepository.getModel();
+    intensities = intensityRepository.getSavedIntensity().asMap().map(
+          (key, value) => MapEntry(value.slug, value.values),
+        );
 
     update();
   }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sekrut/features/data/repository/intensity_repository.dart';
 import 'package:sekrut/features/data/repository/model_repository.dart';
 import 'package:sekrut/features/data/repository/selection_repository.dart';
 import 'package:sekrut/features/presentation/pages/selection/selection_controller.dart';
@@ -10,6 +11,7 @@ class SelectionBinding implements Bindings {
       () => SelectionController(
         modelRepository: Get.find<ModelRepository>(),
         selectionRepository: Get.find<SelectionRepository>(),
+        intensityRepository: Get.find<IntensityRepository>(),
       ),
     );
   }

@@ -6,6 +6,7 @@ part 'intensity.g.dart';
 
 @freezed
 class Intensity with _$Intensity {
+  @JsonSerializable(explicitToJson: true)
   const factory Intensity({
     required double value,
     required String title,
@@ -18,6 +19,7 @@ class Intensity with _$Intensity {
 
 @freezed
 class IntensityForm with _$IntensityForm {
+  @JsonSerializable(explicitToJson: true)
   const factory IntensityForm({
     required String slug,
     required List<IntensityValue> values,
@@ -30,6 +32,7 @@ class IntensityForm with _$IntensityForm {
 
 @freezed
 class IntensityValue with _$IntensityValue {
+  @JsonSerializable(explicitToJson: true)
   const factory IntensityValue({
     required String slug,
     double? value,
@@ -41,6 +44,7 @@ class IntensityValue with _$IntensityValue {
 
 @freezed
 class SubIntensityForm with _$SubIntensityForm {
+  @JsonSerializable(explicitToJson: true)
   const factory SubIntensityForm({
     required String slug,
     required List<IntensityValue> values,

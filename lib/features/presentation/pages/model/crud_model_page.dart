@@ -11,6 +11,7 @@ import 'package:sekrut/features/domain/models/intensity.dart';
 import 'package:sekrut/features/presentation/pages/model/crud_model_controller.dart';
 import 'package:sekrut/features/presentation/widgets/criteria_item.dart';
 import 'package:sekrut/features/presentation/widgets/selection_model_banner.dart';
+import 'package:sekrut/util/helpers/log_helper.dart';
 
 class CrudModelPage extends StatelessWidget {
   const CrudModelPage({super.key});
@@ -29,23 +30,20 @@ class CrudModelPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               title: "Simpan",
-              onPressed: controller.isEdit
-                  // ? controller.updateModel
-                  ? () async {
-                      final List<IntensityForm>? intensities =
-                          await Get.bottomSheet(
-                        PrioritySheet(
-                          criterias: controller.criterias,
-                          intensitiesData: controller.intensitiesData,
-                        ),
-                      );
+              onPressed: () async {
+                if (controller.intensities.isNotEmpty) {
+                  LogHelper.instance.debug(
+                    message:
+                        "Intensity: ${controller.intensities.map((e) => e.toJson()).toList()}",
+                  );
 
-                      if (intensities != null) {
-                        controller.updateModel();
-                        controller.saveIntensities(intensities);
-                      }
-                    }
-                  : controller.saveModel,
+                  controller.saveIntensities(controller.intensities);
+
+                  controller.isEdit
+                      ? controller.updateModel()
+                      : controller.saveModel();
+                }
+              },
             ),
           ),
           body: SafeArea(
@@ -88,6 +86,7 @@ class CrudModelPage extends StatelessWidget {
                           const SizedBox(height: 16),
                           SelectionModelBanner(
                             data: controller.data,
+                            intensities: controller.mappedIntensities,
                             title: "Persentase",
                             showPercentageOnly: true,
                           ),
@@ -97,30 +96,35 @@ class CrudModelPage extends StatelessWidget {
                     const SizedBox(height: 32),
                     PrimarySubtitle(
                       text: "Prioritas Kriteria",
-                      subText:
-                          "Drag kriteria dan sub-kriteria untuk menentukan prioritas. Semakin awal urutan, semakin tinggi prioritas",
-                      onActionPressed: () async {},
+                      actionText: "Ubah",
+                      onActionPressed: () async {
+                        final List<IntensityForm>? intensities =
+                            await Get.bottomSheet(
+                          PrioritySheet(
+                            criterias: controller.criterias,
+                            intensitiesData: controller.intensitiesData,
+                          ),
+                        );
+
+                        if (intensities != null) {
+                          controller.intensities = intensities;
+
+                          controller.update();
+                        }
+                      },
                     ),
                     const SizedBox(height: 16),
-                    ReorderableListView.builder(
+                    ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: controller.criterias.length,
+                      separatorBuilder: (ctx, index) =>
+                          const SizedBox(height: 8),
                       itemBuilder: (ctx, index) => CriteriaItem(
                         key: ValueKey(index.toString()),
                         data: controller.criterias[index],
-                        onSubCriteriaReordered:
-                            controller.onSubCriteriaReordered,
+                        // onSubCriteriaReordered: controller.onSubCriteriaReordered,
                       ),
-                      proxyDecorator: (child, index, animation) {
-                        return AnimatedScale(
-                          scale: 1.1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                          child: child,
-                        );
-                      },
-                      onReorder: controller.onCriteriaReordered,
                     ),
                   ],
                 ),

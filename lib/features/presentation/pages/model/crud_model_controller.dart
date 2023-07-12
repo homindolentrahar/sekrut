@@ -80,8 +80,9 @@ class CrudModelController extends GetxController {
   final AHPModel data = Get.arguments?['data'] ?? AHPModel.empty();
   late List<Criteria> criterias;
 
-  // List<IntensityForm> intensities = [];
+  List<IntensityForm> intensities = [];
   List<Intensity> intensitiesData = [];
+  Map<String, List<IntensityValue>> mappedIntensities = {};
 
   bool get isEdit => Get.parameters['id'] != null;
 
@@ -94,38 +95,11 @@ class CrudModelController extends GetxController {
 
   Future<void> loadAllData() async {
     criterias = List.from(data.criterias);
+    intensities = intensityRepository.getSavedIntensity();
     intensitiesData = await intensityRepository.getIntensity();
-
-    // for (var crit in criterias) {
-    //   final excludedCrits =
-    //       criterias.where((element) => element.slug != crit.slug).toList();
-    //
-    //   final intensity = IntensityForm(
-    //     slug: crit.slug,
-    //     values: excludedCrits.map((e) => IntensityValue(slug: e.slug)).toList(),
-    //     subs: crit.subCriterias.map((sub) {
-    //       final excludedSubs = crit.subCriterias
-    //           .where((element) => element.slug != sub.slug)
-    //           .toList();
-    //
-    //       return SubIntensityForm(
-    //         slug: sub.slug,
-    //         values: excludedSubs
-    //             .map(
-    //               (e) => IntensityValue(slug: e.slug),
-    //             )
-    //             .toList(),
-    //       );
-    //     }).toList(),
-    //   );
-    //
-    //   intensities.add(intensity);
-    // }
-    //
-    // LogHelper.instance.debug(
-    //   message: "Intensities: ${intensities.map((e) => e.toJson()).toList()}",
-    // );
-
+    mappedIntensities = intensities
+        .asMap()
+        .map((key, value) => MapEntry(value.slug, value.values));
     if (criterias.isEmpty) {
       criterias = await criteriasRepository.getCriterias();
     }

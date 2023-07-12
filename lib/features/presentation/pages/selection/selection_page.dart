@@ -56,6 +56,7 @@ class SelectionPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   SelectionModelBanner(
+                    intensities: controller.intensities,
                     data: controller.model,
                     onProceedPressed: () {
                       Get.toNamed(

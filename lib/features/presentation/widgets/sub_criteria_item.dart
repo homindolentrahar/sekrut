@@ -41,13 +41,6 @@ class SubCriteriaItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 16),
-          SvgPicture.asset(
-            Assets.icons.icDrag,
-            color: Get.theme.colorScheme.tertiary,
-            width: 16,
-            height: 16,
-          )
         ],
       ),
     );

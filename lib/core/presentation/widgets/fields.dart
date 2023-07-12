@@ -167,6 +167,7 @@ class BoxTextField<T> extends StatelessWidget {
 }
 
 class BoxSelectorField<T> extends StatelessWidget {
+  final bool enabled;
   final String name;
   final String? title;
   final String hint;
@@ -176,6 +177,7 @@ class BoxSelectorField<T> extends StatelessWidget {
 
   const BoxSelectorField({
     super.key,
+    this.enabled = true,
     required this.name,
     required this.title,
     required this.hint,
@@ -196,9 +198,11 @@ class BoxSelectorField<T> extends StatelessWidget {
 
         return null;
       },
-      onChanged: (value) {
-        onOptionSelected(value);
-      },
+      onChanged: enabled
+          ? (value) {
+              onOptionSelected(value);
+            }
+          : null,
       builder: (field) {
         final TextEditingController controller = TextEditingController(
           text: title,
@@ -210,98 +214,113 @@ class BoxSelectorField<T> extends StatelessWidget {
           children: [
             FormBuilderTextField(
               name: "",
+              enabled: enabled,
               controller: controller,
               readOnly: true,
-              onTap: () async {
-                final T? result = await Get.bottomSheet(
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          top: 24,
-                          bottom: 16,
-                        ),
-                        child: PrimarySubtitle(text: hint),
-                      ),
-                      ...List.generate(
-                        options.length,
-                        (index) => Material(
-                          color: initialValue != options[index]
-                              ? Get.theme.colorScheme.surface
-                              : Get.theme.colorScheme.onSurface,
-                          child: InkWell(
-                            onTap: () {
-                              Get.back(result: options[index]);
-                            },
-                            child: Container(
-                              width: Get.width,
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    (options[index] as dynamic)
-                                        .title
-                                        .toString(),
-                                    style:
-                                        Get.textTheme.headlineSmall?.copyWith(
-                                      color: initialValue != options[index]
-                                          ? Get.theme.colorScheme.onSurface
-                                          : Get.theme.colorScheme.surface,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    (options[index] as dynamic)
-                                        .description
-                                        .toString(),
-                                    style: Get.textTheme.bodyMedium?.copyWith(
-                                      color: initialValue != options[index]
-                                          ? Get.theme.colorScheme.onBackground
-                                          : Get.theme.colorScheme.background,
-                                    ),
-                                  ),
-                                ],
+              onTap: enabled
+                  ? () async {
+                      final T? result = await Get.bottomSheet(
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 24,
+                                right: 24,
+                                top: 24,
+                                bottom: 16,
                               ),
+                              child: PrimarySubtitle(text: hint),
                             ),
+                            ...List.generate(
+                              options.length,
+                              (index) => Material(
+                                color: initialValue != options[index]
+                                    ? Get.theme.colorScheme.surface
+                                    : Get.theme.colorScheme.onSurface,
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.back(result: options[index]);
+                                  },
+                                  child: Container(
+                                    width: Get.width,
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          (options[index] as dynamic)
+                                              .title
+                                              .toString(),
+                                          style: Get.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            color: initialValue !=
+                                                    options[index]
+                                                ? Get
+                                                    .theme.colorScheme.onSurface
+                                                : Get.theme.colorScheme.surface,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          (options[index] as dynamic)
+                                              .description
+                                              .toString(),
+                                          style: Get.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color:
+                                                initialValue != options[index]
+                                                    ? Get.theme.colorScheme
+                                                        .onBackground
+                                                    : Get.theme.colorScheme
+                                                        .background,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ).toList(),
+                          ],
+                        ),
+                        isScrollControlled: true,
+                        backgroundColor: Get.theme.colorScheme.surface,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
                           ),
                         ),
-                      ).toList(),
-                    ],
-                  ),
-                  isScrollControlled: true,
-                  backgroundColor: Get.theme.colorScheme.surface,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8),
-                    ),
-                  ),
-                );
+                      );
 
-                if (result != null) {
-                  field.didChange(result);
-                }
-              },
+                      if (result != null) {
+                        field.didChange(result);
+                      }
+                    }
+                  : null,
+              style: Get.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Get.theme.colorScheme.background.withOpacity(0.5),
                 hintText: hint,
-                hintStyle: Get.textTheme.titleMedium?.copyWith(
+                hintStyle: Get.textTheme.bodyLarge?.copyWith(
                   color: Get.theme.colorScheme.tertiary,
                 ),
                 contentPadding: const EdgeInsets.all(16),
-                suffixIcon: SvgPicture.asset(
-                  Assets.icons.icDown,
-                  color: Get.theme.colorScheme.tertiary,
-                  width: 16,
-                  height: 16,
-                ),
+                suffixIcon: enabled
+                    ? SvgPicture.asset(
+                        Assets.icons.icDown,
+                        color: Get.theme.colorScheme.tertiary,
+                        width: 16,
+                        height: 16,
+                      )
+                    : null,
                 suffixIconConstraints: const BoxConstraints(
                   minWidth: 48,
                   minHeight: 16,

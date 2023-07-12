@@ -1,3 +1,5 @@
+import 'package:sekrut/features/domain/models/intensity.dart';
+
 const Map<int, double> indexRandom = {
   1: 0.00,
   2: 0.00,
@@ -18,12 +20,90 @@ const Map<int, double> indexRandom = {
 
 class AHPCalculation<T> {
   final List<T> list;
+  final Map<String, List<IntensityValue>> intensities;
 
   AHPCalculation({
     required this.list,
+    this.intensities = const {},
   });
 
   int get length => list.length;
+
+  int get lengthAlt => intensities.length;
+
+  Map<String, Map<String, dynamic>> get firstMatrixAlt {
+    final Map<String, Map<String, dynamic>> matrix = {};
+
+    for (int i = 0; i < lengthAlt; i++) {
+      Map<String, dynamic> temp = {};
+
+      for (int j = 0; j < lengthAlt; j++) {
+        temp[intensities.keys.toList()[j]] =
+            intensities.values.toList()[i][j].value;
+      }
+
+      matrix[intensities.keys.toList()[i]] = temp;
+    }
+
+    return matrix;
+  }
+
+  Map<String, double> get totalFirstMatrixAlt {
+    final Map<String, double> temp = {};
+
+    firstMatrixAlt.forEach((key, value) {
+      value.forEach((subKey, subValue) {
+        temp[subKey] = (temp[subKey] ?? 0) + subValue;
+      });
+    });
+
+    return temp;
+  }
+
+  Map<String, Map<String, dynamic>> get secondMatrixAlt {
+    final Map<String, Map<String, dynamic>> matrix = {};
+
+    for (int i = 0; i < firstMatrixAlt.length; i++) {
+      Map<String, dynamic> temp = {};
+
+      for (int j = 0; j < firstMatrixAlt.length; j++) {
+        temp[firstMatrixAlt.keys.toList()[j]] =
+            firstMatrixAlt[firstMatrixAlt.keys.toList()[i]]
+                    ?[firstMatrixAlt.keys.toList()[j]] /
+                totalFirstMatrixAlt[totalFirstMatrixAlt.keys.toList()[j]];
+      }
+
+      matrix[firstMatrixAlt.keys.toList()[i]] = temp;
+    }
+
+    return matrix;
+  }
+
+  Map<String, double> get totalSecondMatrixAlt {
+    final Map<String, double> temp = {};
+
+    secondMatrixAlt.forEach((key, value) {
+      double tempValue = 0;
+
+      value.forEach((subKey, subValue) {
+        tempValue += subValue;
+      });
+
+      temp[key] = tempValue;
+    });
+
+    return temp;
+  }
+
+  Map<String, double> get prioritiesAlt {
+    final Map<String, double> temp = {};
+
+    totalSecondMatrixAlt.forEach((key, value) {
+      temp[key] = value / lengthAlt;
+    });
+
+    return temp;
+  }
 
   List<List<double>> get firstMatrix {
     final List<List<double>> matrix = [];

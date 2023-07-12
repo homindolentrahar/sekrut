@@ -19,13 +19,10 @@ class IntensityRepository {
     return response.map((e) => Intensity.fromJson(e)).toList();
   }
 
-  List<Intensity> getSavedIntensity() {
-    final result = intensityBox.getValues();
-    final decodedResult = json.decode(json.encode(result));
-
+  List<IntensityForm> getSavedIntensity() {
     return intensityBox
         .getValues()
-        .map((item) => Intensity.fromJson(decodedResult))
+        .map((item) => IntensityForm.fromJson(json.decode(json.encode(item))))
         .toList();
   }
 }

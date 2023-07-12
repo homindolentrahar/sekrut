@@ -13,10 +13,12 @@ final colors = {
 
 class CriteriaPercentage extends StatelessWidget {
   final List<Criteria> criterias;
+  final Map<String, double> percentage;
 
   const CriteriaPercentage({
     super.key,
-    this.criterias = const [],
+    required this.criterias,
+    required this.percentage,
   });
 
   @override
@@ -30,37 +32,44 @@ class CriteriaPercentage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
             criterias.length,
-            (index) => Expanded(
-              flex: (criterias[index].value ?? 0).toPercent().floor(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: colors[criterias[index].slug],
-                  borderRadius: index == 0
-                      ? const BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
-                        )
-                      : index == criterias.length - 1
-                          ? const BorderRadius.only(
-                              topRight: Radius.circular(8),
-                              bottomRight: Radius.circular(8),
-                            )
-                          : null,
-                ),
-                child: Text(
-                  "${criterias[index].value?.toPercent().toStringAsFixed(1)}%",
-                  textAlign: TextAlign.center,
-                  style: Get.textTheme.headlineSmall?.copyWith(
-                    color: Get.theme.colorScheme.onSurface,
-                    fontSize: 10,
+            // percentage.length,
+            (index) {
+              return Expanded(
+                // flex: (criterias[index].value ?? 0).toPercent().floor(),
+                flex: (percentage[percentage.keys.toList()[index]] ?? 0)
+                    .toPercent()
+                    .floor(),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colors[criterias[index].slug],
+                    borderRadius: index == 0
+                        ? const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            bottomLeft: Radius.circular(8),
+                          )
+                        : index == criterias.length - 1
+                            ? const BorderRadius.only(
+                                topRight: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                              )
+                            : null,
+                  ),
+                  child: Text(
+                    // "${criterias[index].value?.toPercent().toStringAsFixed(1)}%",
+                    "${percentage[percentage.keys.toList()[index]]?.toStringAsFixed(2)}%",
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.headlineSmall?.copyWith(
+                      color: Get.theme.colorScheme.onSurface,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ).toList(),
         ),
         const SizedBox(height: 16),

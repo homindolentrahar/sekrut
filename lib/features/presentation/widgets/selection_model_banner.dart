@@ -3,11 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/features/domain/models/ahp_model.dart';
+import 'package:sekrut/features/domain/models/intensity.dart';
 import 'package:sekrut/features/presentation/widgets/criteria_percentage.dart';
 import 'package:sekrut/generated/assets.gen.dart';
+import 'package:sekrut/util/helpers/ahp_calculation.dart';
+import 'package:sekrut/util/helpers/log_helper.dart';
 
 class SelectionModelBanner extends StatelessWidget {
   final AHPModel? data;
+  final Map<String, List<IntensityValue>>? intensities;
   final String? title;
   final bool showPercentageOnly;
   final VoidCallback? onProceedPressed;
@@ -15,6 +19,7 @@ class SelectionModelBanner extends StatelessWidget {
   const SelectionModelBanner({
     super.key,
     this.data,
+    this.intensities,
     this.title,
     this.showPercentageOnly = false,
     this.onProceedPressed,
@@ -22,6 +27,17 @@ class SelectionModelBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final calculation =
+        AHPCalculation(list: [], intensities: intensities ?? {});
+
+    LogHelper.instance.debug(
+      message: "First Matrix: ${calculation.firstMatrixAlt}\n"
+          "Total First: ${calculation.totalFirstMatrixAlt}\n"
+          "Second Matrix: ${calculation.secondMatrixAlt}\n"
+          "Total Second: ${calculation.totalSecondMatrixAlt}\n"
+          "Priorities: ${calculation.prioritiesAlt}",
+    );
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -97,6 +113,7 @@ class SelectionModelBanner extends StatelessWidget {
           const SizedBox(height: 16),
           CriteriaPercentage(
             criterias: data?.criterias ?? [],
+            percentage: calculation.prioritiesAlt,
           ),
         ],
       ),
