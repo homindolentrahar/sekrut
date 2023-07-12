@@ -72,6 +72,7 @@ class PrimaryTextButton extends StatelessWidget {
   final Widget? icon;
   final String text;
   final double fontSize;
+  final Color? color;
   final VoidCallback onPressed;
 
   const PrimaryTextButton({
@@ -79,6 +80,7 @@ class PrimaryTextButton extends StatelessWidget {
     this.icon,
     required this.text,
     this.fontSize = 16,
+    this.color,
     required this.onPressed,
   });
 
@@ -108,6 +110,7 @@ class PrimaryTextButton extends StatelessWidget {
               text,
               style: Get.textTheme.headlineSmall?.copyWith(
                 fontSize: fontSize,
+                color: color ?? Get.theme.primaryColor,
               ),
             ),
           ],

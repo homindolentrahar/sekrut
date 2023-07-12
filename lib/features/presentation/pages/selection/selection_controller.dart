@@ -15,8 +15,8 @@ class SelectionController extends GetxController {
     required this.selectionRepository,
   });
 
-  late String username;
-  late AHPModel model;
+  String username = "";
+  AHPModel model = AHPModel.empty();
   List<Selection> selections = [];
 
   @override

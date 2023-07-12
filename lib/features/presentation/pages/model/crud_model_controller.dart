@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:sekrut/features/data/repository/criterias_repository.dart';
+import 'package:sekrut/features/data/repository/intensity_repository.dart';
 import 'package:sekrut/features/data/repository/model_repository.dart';
 import 'package:sekrut/features/domain/models/ahp_model.dart';
 import 'package:sekrut/features/domain/models/criteria.dart';
+import 'package:sekrut/features/domain/models/intensity.dart';
 import 'package:sekrut/features/domain/models/sub_criteria.dart';
 import 'package:sekrut/route/app_route.dart';
 import 'package:sekrut/util/helpers/ahp_calculation.dart';
@@ -66,15 +68,20 @@ Future<List<Criteria>> calculatePriorities(List<Criteria> list) {
 class CrudModelController extends GetxController {
   final CriteriasRepository criteriasRepository;
   final ModelRepository modelRepository;
+  final IntensityRepository intensityRepository;
 
   CrudModelController({
     required this.criteriasRepository,
     required this.modelRepository,
+    required this.intensityRepository,
   });
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   final AHPModel data = Get.arguments?['data'] ?? AHPModel.empty();
   late List<Criteria> criterias;
+
+  // List<IntensityForm> intensities = [];
+  List<Intensity> intensitiesData = [];
 
   bool get isEdit => Get.parameters['id'] != null;
 
@@ -82,11 +89,42 @@ class CrudModelController extends GetxController {
   void onInit() {
     super.onInit();
 
-    loadCriterias();
+    loadAllData();
   }
 
-  Future<void> loadCriterias() async {
+  Future<void> loadAllData() async {
     criterias = List.from(data.criterias);
+    intensitiesData = await intensityRepository.getIntensity();
+
+    // for (var crit in criterias) {
+    //   final excludedCrits =
+    //       criterias.where((element) => element.slug != crit.slug).toList();
+    //
+    //   final intensity = IntensityForm(
+    //     slug: crit.slug,
+    //     values: excludedCrits.map((e) => IntensityValue(slug: e.slug)).toList(),
+    //     subs: crit.subCriterias.map((sub) {
+    //       final excludedSubs = crit.subCriterias
+    //           .where((element) => element.slug != sub.slug)
+    //           .toList();
+    //
+    //       return SubIntensityForm(
+    //         slug: sub.slug,
+    //         values: excludedSubs
+    //             .map(
+    //               (e) => IntensityValue(slug: e.slug),
+    //             )
+    //             .toList(),
+    //       );
+    //     }).toList(),
+    //   );
+    //
+    //   intensities.add(intensity);
+    // }
+    //
+    // LogHelper.instance.debug(
+    //   message: "Intensities: ${intensities.map((e) => e.toJson()).toList()}",
+    // );
 
     if (criterias.isEmpty) {
       criterias = await criteriasRepository.getCriterias();
@@ -130,6 +168,10 @@ class CrudModelController extends GetxController {
 
       Get.back();
     }
+  }
+
+  Future<void> saveIntensities(List<IntensityForm> values) async {
+    await intensityRepository.saveIntensity(values);
   }
 
   void onCriteriaReordered(int oldIndex, int newIndex) {

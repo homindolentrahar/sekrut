@@ -25,6 +25,10 @@ class BoxHelper {
     return _box.add(value);
   }
 
+  Future<void> addAllValue(List<dynamic> values) {
+    return _box.addAll(values);
+  }
+
   Stream<dynamic> listenValue(String key) {
     return _box.watch().map((event) => _box.get(key));
   }

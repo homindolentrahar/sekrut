@@ -5,18 +5,9 @@ abstract class AppConfig {
   static Future<void> init() async {
     await Hive.initFlutter();
 
-    // final collection = await BoxCollection.open(
-    //   AppBoxes.sekrut,
-    //   {
-    //     AppBoxes.app,
-    //     AppBoxes.model,
-    //     AppBoxes.selections,
-    //   },
-    //   path: "./",
-    // );
-
     await Hive.openBox(AppBoxes.app);
     await Hive.openBox(AppBoxes.model);
     await Hive.openBox(AppBoxes.selections);
+    await Hive.openBox(AppBoxes.intensities);
   }
 }

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:sekrut/core/presentation/widgets/bars.dart';
 import 'package:sekrut/core/presentation/widgets/buttons.dart';
 import 'package:sekrut/core/presentation/widgets/fields.dart';
+import 'package:sekrut/core/presentation/widgets/sheets.dart';
 import 'package:sekrut/core/presentation/widgets/texts.dart';
+import 'package:sekrut/features/domain/models/intensity.dart';
 import 'package:sekrut/features/presentation/pages/model/crud_model_controller.dart';
 import 'package:sekrut/features/presentation/widgets/criteria_item.dart';
 import 'package:sekrut/features/presentation/widgets/selection_model_banner.dart';
@@ -28,7 +30,21 @@ class CrudModelPage extends StatelessWidget {
             child: PrimaryButton(
               title: "Simpan",
               onPressed: controller.isEdit
-                  ? controller.updateModel
+                  // ? controller.updateModel
+                  ? () async {
+                      final List<IntensityForm>? intensities =
+                          await Get.bottomSheet(
+                        PrioritySheet(
+                          criterias: controller.criterias,
+                          intensitiesData: controller.intensitiesData,
+                        ),
+                      );
+
+                      if (intensities != null) {
+                        controller.updateModel();
+                        controller.saveIntensities(intensities);
+                      }
+                    }
                   : controller.saveModel,
             ),
           ),

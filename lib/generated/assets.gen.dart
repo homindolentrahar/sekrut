@@ -107,8 +107,11 @@ class $AssetsJsonsGen {
   /// File path: assets/jsons/criterias.json
   String get criterias => 'assets/jsons/criterias.json';
 
+  /// File path: assets/jsons/intensity.json
+  String get intensity => 'assets/jsons/intensity.json';
+
   /// List of all assets
-  List<String> get values => [criterias];
+  List<String> get values => [criterias, intensity];
 }
 
 class Assets {
