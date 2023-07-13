@@ -13,6 +13,7 @@ import 'package:sekrut/features/presentation/widgets/alternatif_item.dart';
 import 'package:sekrut/features/presentation/widgets/selection_model_banner.dart';
 import 'package:sekrut/generated/assets.gen.dart';
 import 'package:sekrut/route/app_route.dart';
+import 'package:sekrut/util/helpers/log_helper.dart';
 
 class CrudSelectionPage extends StatelessWidget {
   const CrudSelectionPage({super.key});
@@ -21,6 +22,9 @@ class CrudSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<CrudSelectionController>(
       builder: (controller) {
+        LogHelper.instance
+            .warning(message: "Alts: ${controller.sortedAlternatives}");
+
         return Scaffold(
           appBar: PrimaryAppBar(
             title: controller.isEdit ? "Ubah Seleksi" : "Buat Seleksi",
@@ -65,8 +69,9 @@ class CrudSelectionPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     BoxTextField(
-                      initValue:
-                          controller.data.selectedAlternatives.toString(),
+                      initValue: controller.data.selectedAlternatives == 0
+                          ? null
+                          : controller.data.selectedAlternatives.toString(),
                       name: "alt_count",
                       hint: "Jumlah Pilihan Alternatif",
                       keyboardType: TextInputType.number,
@@ -91,11 +96,11 @@ class CrudSelectionPage extends StatelessWidget {
                       name: 'alternatives',
                       initialValue: controller.sortedAlternatives,
                       validator: (values) {
-                        if (values?.isEmpty ?? false) {
+                        if (controller.sortedAlternatives.isEmpty) {
                           return "Alternatives cannot be empty!";
                         }
 
-                        if ((values?.length ?? 0) < 3) {
+                        if (controller.sortedAlternatives.length < 3) {
                           return "Alternatives must be at least 3 person";
                         }
 

@@ -134,51 +134,54 @@ class AlternatifItem extends StatelessWidget {
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
-                child: Wrap(
-                  direction: Axis.vertical,
-                  spacing: 16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
                     data?.criterias.length ?? 0,
-                    (index) => Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data?.criterias[index].title ?? "Tidak ada Kriteria",
-                          style: Get.textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          direction: Axis.horizontal,
-                          spacing: 16,
-                          children: List.generate(
-                            data?.criterias[index].subCriterias.length ?? 0,
-                            (subIndex) => Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data?.criterias[index].subCriterias[subIndex]
-                                          .title ??
-                                      "",
-                                  style: Get.textTheme.titleSmall?.copyWith(
-                                    color: Get.theme.colorScheme.tertiary,
+                    (index) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data?.criterias[index].title ?? "Tidak ada Kriteria",
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            spacing: 16,
+                            runSpacing: 8,
+                            children: List.generate(
+                              data?.criterias[index].subCriterias.length ?? 0,
+                              (subIndex) => Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data?.criterias[index].subCriterias[subIndex]
+                                            .title ??
+                                        "",
+                                    style: Get.textTheme.titleSmall?.copyWith(
+                                      color: Get.theme.colorScheme.tertiary,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  data?.criterias[index].subCriterias[subIndex]
-                                          .option?.title ??
-                                      "",
-                                  style: Get.textTheme.headlineSmall?.copyWith(
-                                    fontSize: 12,
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    data?.criterias[index].subCriterias[subIndex]
+                                            .option?.title ??
+                                        "",
+                                    style: Get.textTheme.headlineSmall?.copyWith(
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ).toList(),
                 ),

@@ -192,6 +192,10 @@ class AHPCalculation<T> {
     return priorities[foundIndex];
   }
 
+  double getPriorityAlt(String key) {
+    return prioritiesAlt[key] ?? 0;
+  }
+
   double get lambdaMax {
     double temp = 0;
 

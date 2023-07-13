@@ -107,6 +107,7 @@ class DetailSelectionPage extends StatelessWidget {
                   const SizedBox(height: 32),
                   SelectionModelBanner(
                     data: controller.data?.model,
+                    intensities: controller.mappedIntensities,
                   ),
                   const SizedBox(height: 32),
                   const PrimarySubtitle(text: "Hasil Seleksi"),

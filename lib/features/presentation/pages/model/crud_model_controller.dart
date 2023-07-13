@@ -14,12 +14,25 @@ import 'package:sekrut/util/helpers/ahp_calculation.dart';
 import 'package:uuid/uuid.dart';
 
 List<Criteria> _calculate(List<Criteria> list) {
+  final List<IntensityForm> savedIntensities =
+      Get.find<IntensityRepository>().getSavedIntensity();
   final List<Criteria> temp = [];
-  final critCalc = AHPCalculation(list: list);
+  final critCalc = AHPCalculation(
+    list: list,
+    intensities: savedIntensities
+        .asMap()
+        .map((key, value) => MapEntry(value.slug, value.values)),
+  );
 
   for (var critIndex = 0; critIndex < list.length; critIndex++) {
     final criteria = list[critIndex];
-    final subCalc = AHPCalculation(list: criteria.subCriterias);
+    final subCalc = AHPCalculation(
+      list: criteria.subCriterias,
+      intensities: savedIntensities[critIndex]
+          .subs
+          .asMap()
+          .map((key, value) => MapEntry(value.slug, value.values)),
+    );
     final List<SubCriteria> subs = [];
 
     for (var subIndex = 0;
@@ -41,7 +54,8 @@ List<Criteria> _calculate(List<Criteria> list) {
 
       subs.add(
         subCriteria.copyWith(
-          value: subCalc.getPriority(subCriteria),
+          // value: subCalc.getPriority(subCriteria),
+          value: subCalc.getPriorityAlt(savedIntensities[critIndex].subs[subIndex].slug),
           options: options,
         ),
       );
@@ -49,7 +63,8 @@ List<Criteria> _calculate(List<Criteria> list) {
 
     temp.add(
       criteria.copyWith(
-        value: critCalc.getPriority(list[critIndex]),
+        // value: critCalc.getPriority(list[critIndex]),
+        value: critCalc.getPriorityAlt(savedIntensities[critIndex].slug),
         subCriterias: subs,
       ),
     );
