@@ -35,7 +35,9 @@ class SelectionModelBanner extends StatelessWidget {
           "Total First: ${calculation.totalFirstMatrixAlt}\n"
           "Second Matrix: ${calculation.secondMatrixAlt}\n"
           "Total Second: ${calculation.totalSecondMatrixAlt}\n"
-          "Priorities: ${calculation.prioritiesAlt}",
+          "Priorities: ${calculation.prioritiesAlt}\n"
+          "Lambda Max: ${calculation.lambdaMaxAlt}\n"
+          "Consistency Rate: ${calculation.consistencyRate}",
     );
 
     return Container(

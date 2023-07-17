@@ -13,19 +13,28 @@ import 'package:sekrut/route/app_route.dart';
 import 'package:sekrut/util/helpers/ahp_calculation.dart';
 import 'package:uuid/uuid.dart';
 
-List<Criteria> _calculate(List<Criteria> list) {
-  final List<IntensityForm> savedIntensities =
-      Get.find<IntensityRepository>().getSavedIntensity();
+class IsolateCalculationData {
+  final List<Criteria> criterias;
+  final List<IntensityForm> intensities;
+
+  IsolateCalculationData({
+    required this.criterias,
+    required this.intensities,
+  });
+}
+
+List<Criteria> _calculate(IsolateCalculationData data) {
+  final List<IntensityForm> savedIntensities = data.intensities;
   final List<Criteria> temp = [];
   final critCalc = AHPCalculation(
-    list: list,
+    list: data.criterias,
     intensities: savedIntensities
         .asMap()
         .map((key, value) => MapEntry(value.slug, value.values)),
   );
 
-  for (var critIndex = 0; critIndex < list.length; critIndex++) {
-    final criteria = list[critIndex];
+  for (var critIndex = 0; critIndex < data.criterias.length; critIndex++) {
+    final criteria = data.criterias[critIndex];
     final subCalc = AHPCalculation(
       list: criteria.subCriterias,
       intensities: savedIntensities[critIndex]
@@ -54,8 +63,9 @@ List<Criteria> _calculate(List<Criteria> list) {
 
       subs.add(
         subCriteria.copyWith(
-          // value: subCalc.getPriority(subCriteria),
-          value: subCalc.getPriorityAlt(savedIntensities[critIndex].subs[subIndex].slug),
+// value: subCalc.getPriority(subCriteria),
+          value: subCalc
+              .getPriorityAlt(savedIntensities[critIndex].subs[subIndex].slug),
           options: options,
         ),
       );
@@ -63,7 +73,7 @@ List<Criteria> _calculate(List<Criteria> list) {
 
     temp.add(
       criteria.copyWith(
-        // value: critCalc.getPriority(list[critIndex]),
+// value: critCalc.getPriority(list[critIndex]),
         value: critCalc.getPriorityAlt(savedIntensities[critIndex].slug),
         subCriterias: subs,
       ),
@@ -73,10 +83,10 @@ List<Criteria> _calculate(List<Criteria> list) {
   return temp;
 }
 
-Future<List<Criteria>> calculatePriorities(List<Criteria> list) {
+Future<List<Criteria>> calculatePriorities(IsolateCalculationData data) {
   return compute(
     _calculate,
-    list,
+    data,
   );
 }
 
@@ -125,7 +135,12 @@ class CrudModelController extends GetxController {
   Future<void> saveModel() async {
     if (formKey.currentState!.saveAndValidate()) {
       final value = formKey.currentState!.value;
-      final priorities = await calculatePriorities(criterias);
+      final priorities = await calculatePriorities(
+        IsolateCalculationData(
+          criterias: criterias,
+          intensities: intensities,
+        ),
+      );
 
       final ahpModel = data.copyWith(
         id: const Uuid().v4(),
@@ -144,7 +159,12 @@ class CrudModelController extends GetxController {
   Future<void> updateModel() async {
     if (formKey.currentState!.saveAndValidate()) {
       final value = formKey.currentState!.value;
-      final priorities = await calculatePriorities(criterias);
+      final priorities = await calculatePriorities(
+        IsolateCalculationData(
+          criterias: criterias,
+          intensities: intensities,
+        ),
+      );
 
       final ahpModel = data.copyWith(
         title: value['name'],

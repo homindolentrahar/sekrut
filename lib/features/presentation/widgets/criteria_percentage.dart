@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sekrut/core/ui/app_color.dart';
 import 'package:sekrut/features/domain/models/criteria.dart';
 import 'package:sekrut/util/extensions/double_extensions.dart';
-import 'package:sekrut/util/helpers/log_helper.dart';
 
 final colors = {
   'skill': AppColor.skill,
@@ -24,8 +23,6 @@ class CriteriaPercentage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LogHelper.instance.error(message: "Percent: $percentage");
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

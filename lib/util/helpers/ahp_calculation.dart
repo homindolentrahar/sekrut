@@ -206,6 +206,28 @@ class AHPCalculation<T> {
     return temp;
   }
 
+  double get lambdaMaxAlt {
+    double temp = 0;
+    final prioAlt = prioritiesAlt;
+    final totalFirst = totalFirstMatrixAlt;
+
+    for (MapEntry<String, double> entry in prioAlt.entries) {
+      temp += (prioritiesAlt[entry.key] ?? 0) *
+          (totalFirstMatrixAlt[entry.key] ?? 0);
+    }
+
+    return temp;
+  }
+
+  double get consistencyRate {
+    final ci = (lambdaMaxAlt - lengthAlt) / (lengthAlt - 1);
+    final cr = ci / (indexRandom[lengthAlt] ?? 0);
+
+    return cr;
+  }
+
+  bool get isConsistenceAlt => consistencyRate < 0.1;
+
   bool get isConcistence {
     final ci = (lambdaMax - length) / (length - 1);
     final cr = ci / (indexRandom[length] ?? 0);
